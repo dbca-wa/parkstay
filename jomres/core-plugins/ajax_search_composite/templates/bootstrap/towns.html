@@ -1,0 +1,12 @@
+<patTemplate:tmpl name="sub_pageoutput" unusedvars="strip">
+<li class="list-group-item">
+<strong>{REGION_NAME}</strong>
+<div id="town-content">
+	<patTemplate:tmpl name="town_rows">
+	<label class="btn btn-primary element_button {ACTIVE_CLASS} col-xs-6 col-sm-6 col-md-6 col-lg-12" id="button_{RANDOM_ID}" for="{RANDOM_ID}" onClick="toggle_button_class(this)"><i class="icon-location"></i> {TOWN}</label><input type="checkbox" {CHECKED} class="hidden" id="{RANDOM_ID}" name="towns[]" value="{TOWN}" autocomplete=off />
+	<!--<input type="checkbox" name="towns[]" value="{TOWN}" /> {TOWN}<br />-->
+	</patTemplate:tmpl>
+</div>
+<div class="clearfix"></div>
+</li>
+</patTemplate:tmpl>

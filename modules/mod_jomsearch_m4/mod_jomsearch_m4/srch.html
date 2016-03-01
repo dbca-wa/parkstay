@@ -1,0 +1,51 @@
+<patTemplate:tmpl name="search">
+    <form action="{SUBMITURL}" method="GET" name="{FORMNAME}">
+        <div class="row">
+            <input type="hidden" name="option" value="com_jomres" />
+            <div style="width:100%;" class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+                <p>Search again</p>
+
+                <!--{JOMRES_SEARCH_GEO_TOWNSEARCH}-->
+                <a href="javascript:void(0);" class="" data-toggle="popover" data-content="{HBOOKABLE}" data-original-title="" title=""><i class="icon-info-2"></i></a> {TOWN} {HARRIVALDATE} {ARRIVALDATE} {HDEPARTUREDATE} {DEPARTUREDATE}
+                <div style="padding-top: 12px;padding-bottom: 4px;">
+                    <!--{JOMRES_SEARCH_DESCRIPTION_INFO} -->
+                    {PROPERTYNAME}
+                    {JOMRES_SEARCH_GEO_COUNTRYSEARCH}
+                    {COUNTRY}
+                    {JOMRES_SEARCH_GEO_REGIONSEARCH}
+                    {REGION}
+                    {BOOKABLE}
+                </div>
+            </div>
+            <div style="clear:both;margin-top: 10px;" class="col-xs-12 col-sm-12 col-md-2 col-lg-2"> {THEBUTTON}</div>
+            <span style="font-size:12px;color:#666666;padding:15px;clear:both;float:left;">Bookings cannot be made for most campgrounds</span>
+
+            <!--{DESCRIPTION}-->
+            <!--{JOMRES_SEARCH_FEATURE_INFO}
+            {FEATURE}<br/>
+            {JOMRES_SEARCH_RTYPES}
+            {ROOM_TYPE}
+            <!--{JOMRES_SEARCH_AVL_INFO}<br/>
+
+            {JOMRES_SEARCH_PTYPES}
+            {PTYPE}
+            {JOMRES_SEARCH_PRICERANGES}
+            {PRICERANGES}
+
+
+            {JOMRES_SEARCH_GEO_COUNTRYSEARCH}
+            {SELECTCOMBO_COUNTRY}
+            {JOMRES_SEARCH_GEO_REGIONSEARCH}
+            {SELECTCOMBO_HIDDENDROPDOWNS_REGION}
+            {JOMRES_SEARCH_GEO_TOWNSEARCH}
+            {SELECTCOMBO_HIDDENDROPDOWNS_TOWN}
+
+            {HGUESTNUMBER} {GUESTNUMBER}<br/>
+            {HSTARS} {STARS}<br/>
+
+
+            {THEBUTTON}-->
+            {HIDDEN}
+        </div>
+    </form>
+</patTemplate:tmpl>

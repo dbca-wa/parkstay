@@ -1,0 +1,91 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="strip">
+	<script language="JavaScript" type="text/javascript">
+		<!--
+		jomresJquery(document).ready(function () {
+			make_datatable('showLiveBookings', '{PAGETITLE}', '{LIVESITE}');
+		});
+		//-->
+	</script>
+	<div id="{TOUR_DIV_ID}"></div><div id="tour_target_table_tools"></div>
+	<h2 class="page-header">{PAGETITLE}</h2>
+
+	<div class="well" style="display:none;">
+		<div class="row-fluid">
+			<div class="span4">
+				<img src="{IMG_PENDING}"/>
+				{TEXT_PENDING}
+			</div>
+			<div class="span4">
+				<img src="{IMG_ARRIVETODAY}"/>
+				{TEXT_ARRIVETODAY}
+			</div>
+			<div class="span4">
+				<img src="{IMG_RESIDENT}"/>
+				{TEXT_RESIDENT}
+			</div>
+		</div>
+		<div class="row-fluid">
+			<div class="span4">
+				<img src="{IMG_LATE}"/>
+				{TEXT_LATE}
+			</div>
+			<div class="span4">
+				<img src="{IMG_DEPARTTODAY}"/>
+				{TEXT_DEPARTTODAY}
+			</div>
+			<div class="span4">
+				<img src="{IMG_STILLHERE}"/>
+				{TEXT_STILLHERE}
+			</div>
+		</div>
+	</div>
+
+	<table class="table table-striped" id="showLiveBookings" width="100%">
+		<thead>
+          <tr>
+              <th>Site number</th>    
+			<th>{_JOMRES_COM_MR_EDITBOOKINGTITLE}</th>
+			<th>{_JOMRES_COM_MR_VIEWBOOKINGS_SURNAME}</th>
+			<th>Phone</th>
+			<th>Email</th>
+			<th>Remainder to pay</th>
+			<th>Vehicle Reg</th>
+			<th>{_JOMRES_BOOKING_NUMBER}</th>
+			<th>{ARRIVAL}</th>
+            <th>{DEPARTURE}</th>
+            <th>Ad</th>
+            <th>Ch</th>
+            <th>Con</th>
+		</tr>
+		</thead>
+		<tbody>
+		<patTemplate:tmpl name="rows" unusedvars="nbsp" type="simpleCondition" requiredVars="arrivaldate">
+        <tr>
+            <td>{ROOM} </td>
+				<td>
+					<div class="btn-group">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							<i class="icon-edit"></i>
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
+							<li><a tabindex="-1" href="{EDIT_URL}">{EDIT_TEXT}</a></li>
+						</ul>
+					</div>
+				</td>
+				<td>{FIRSTNAME} {SURNAME}</td>
+                <td>{PHONE}</td>
+                <td>{EMAIL}</td>
+                <td>{REMAINDER}</td>
+				<td>{CAR_REG}</td>
+				<td>{BOOKING_NO}</td>
+				<td>{ARRIVALDATE}</td>
+                <td>{DEPARTURE}</td>
+                <td>{ADULT}</td>
+                <td>{CHILD}</td>
+                <td>{CONCESSION}</td>
+			</tr>
+		</patTemplate:tmpl>
+		</tbody>
+	</table>
+</patTemplate:tmpl>

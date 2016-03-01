@@ -1,0 +1,54 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="strip">
+<h2>{PAGETITLE}</h2>
+<form action="{JOMRES_SITEPAGE_URL_ADMIN}" method="post" name="adminForm">
+{JOMRESTOOLBAR}
+<table class="ui-widget-content ui-corner-all" width="100%" border="0">
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_MODAL}</td>
+        <td>{MODAL}</td>
+    </tr>
+    <tr>
+        <td width="30%">{_JOMRES_AJAX_SEARCH_COMPOSITE_BYSTARS}</td>
+        <td>{BY_STARS}</td>
+    </tr>
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_BYPRICES}</td>
+        <td>{BY_PRICE}</td>
+    </tr>
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_BYFEATURES}</td>
+        <td>{BY_FEATURES}</td>
+    </tr>
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_BYCOUNTRY}</td>
+        <td>{BY_COUNTRY}</td>
+    </tr>
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_BYREGION}</td>
+        <td>{BY_REGION}</td>
+    </tr>
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_BYTOWN}</td>
+        <td>{BY_TOWN}</td>
+    </tr>
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_BYROOMTYPE}</td>
+        <td>{BY_ROOMTYPE}</td>
+    </tr>
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_BYPROPERTYTYPE}</td>
+        <td>{BY_PROPERTYTYPE}</td>
+    </tr>
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_BYGUESTNUMBER}</td>
+        <td>{BY_GUESTNUMBER}</td>
+    </tr>
+    <tr>
+        <td>{_JOMRES_AJAX_SEARCH_COMPOSITE_BYDATES}</td>
+        <td>{BY_DATE}</td>
+    </tr>
+
+</table>
+<input type="hidden" name="task" value="save_ajax_search_composite" />
+</form>
+</patTemplate:tmpl>

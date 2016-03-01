@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" version="3.0" client="site" method="upgrade">
+	<name>Latest News +</name>
+	<author>TemplatePlazza</author>
+	<creationDate>December 2011</creationDate>
+	<copyright>Copyright (C) 2005 - 2012 Open Source Matters. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<authorEmail>support@templateplazza.com</authorEmail>
+	<authorUrl>www.templateplazza.com</authorUrl>
+	<version>2.1.0</version>
+	<description>MOD_LATESTNEWSPLUSDATE_DESC</description>
+	<files>
+		<filename module="mod_latestnewsplusdate">mod_latestnewsplusdate.php</filename>
+		<filename>helper.php</filename>
+		<filename>image.php</filename>
+		<filename>index.html</filename>
+		<folder>tmpl</folder>
+		<folder>assets</folder>
+	</files>
+	
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.mod_latestnewsplusdate.sys.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.mod_latestnewsplusdate.ini</language>
+	</languages>
+			
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="catid" type="category" extension="com_content" multiple="true" size="10" label="JCATEGORY" description="MOD_LATESTNEWSPLUSDATE_CATEGORY_DESC" >
+					<option value="">JOPTION_ALL_CATEGORIES</option>
+				</field>
+				<field name="displayspacer" type="spacer" label="------------------------------------ Display Format ------------------------------------" class="text"/>
+				<field name="count" type="text" default="5" label="MOD_LATESTNEWSPLUSDATE_COUNT_LABEL" description="MOD_LATESTNEWSPLUSDATE_COUNT_DESC" />
+				<field name="show_introtext" type="radio" default="1" label="MOD_LATESTNEWSPLUSDATE_INTROTEXT_LABEL" description="MOD_LATESTNEWSPLUSDATE_INTROTEXT_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="numofintrotext" type="text" default="1" label="MOD_LATESTNEWSPLUSDATE_NUMOFINTRO_LABEL" description="MOD_LATESTNEWSPLUSDATE_NUMOFINTRO_DESC" />
+				<field name="num_intro_skip" type="text" default="0" label="MOD_LATESTNEWSPLUSDATE_NUMINTROSKIPPED_LABEL" description="MOD_LATESTNEWSPLUSDATE_NUMINTROSKIPPED_DESC" />
+				<field name="limit_intro" type="text" default="200" label="MOD_LATESTNEWSPLUSDATE_LIMITINTRO_LABEL" description="MOD_LATESTNEWSPLUSDATE_LIMITINTRO_DESC" />
+				<field name="show_date" type="radio" default="1" label="MOD_LATESTNEWSPLUSDATE_SHOWDATE_LABEL" description="MOD_LATESTNEWSPLUSDATE_SHOWDATE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+				<field name="show_date_type" type="list" default="0" label="MOD_LATESTNEWSPLUSDATE_DATETYPE_LABEL" description="MOD_LATESTNEWSPLUSDATE_DATETYPE_DESC">
+					<option value="0">MOD_LATESTNEWSPLUSDATE_DATETYPE_LC1</option>
+					<option value="1">MOD_LATESTNEWSPLUSDATE_DATETYPE_LC2</option>
+					<option value="2">MOD_LATESTNEWSPLUSDATE_DATETYPE_LC3</option>
+					<option value="3">MOD_LATESTNEWSPLUSDATE_DATETYPE_TIMEONLY</option>
+					<option value="4">MOD_LATESTNEWSPLUSDATE_DATETYPE_SHORTFULLDATE</option>
+					<option value="5">MOD_LATESTNEWSPLUSDATE_DATETYPE_LONGFULLDATETIME</option>
+				</field>
+				
+
+				<field name="show_more_in" type="radio" default="1" label="MOD_LATESTNEWSPLUSDATE_SHOWMOREIN_LABEL" description="MOD_LATESTNEWSPLUSDATE_SHOWMOREIN_DESC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="articlepropertiesspacer" type="spacer" label="---------------------------------- Article Properties ----------------------------------" class="text"/>
+				<field name="ordering" type="list" default="published" label="MOD_LATESTNEWSPLUSDATE_ORDERING_LABEL" description="MOD_LATESTNEWSPLUSDATE_ORDERING_DESC">
+					<option value="c_dsc">MOD_LATESTNEWSPLUSDATE_RECENT_ADDED</option>
+					<option value="m_dsc">MOD_LATESTNEWSPLUSDATE_RECENT_MODIFIED</option>
+					<option value="p_dsc">MOD_LATESTNEWSPLUSDATE_RECENT_PUBLISHED</option>
+					<option value="mc_dsc">MOD_LATESTNEWSPLUSDATE_RECENT_TOUCHED</option>
+				</field>
+				<field name="user_id" type="list" default="0" label="MOD_LATESTNEWSPLUSDATE_USER_LABEL" description="MOD_LATESTNEWSPLUSDATE_USER_DESC">
+					<option value="0">MOD_LATESTNEWSPLUSDATE_VALUE_ANYONE</option>
+					<option	value="by_me">MOD_LATESTNEWSPLUSDATE_VALUE_ADDED_BY_ME</option>
+					<option value="not_me">MOD_LATESTNEWSPLUSDATE_VALUE_NOTADDED_BY_ME</option>
+				</field>
+				<field name="show_featured" type="list" default="" label="MOD_LATESTNEWSPLUSDATE_FEATURED_LABEL" description="MOD_LATESTNEWSPLUSDATE_FEATURED_DESC">
+					<option value="">JSHOW</option>
+					<option value="0">JHIDE</option>
+					<option value="1">MOD_LATESTNEWSPLUSDATE_VALUE_ONLY_SHOW_FEATURED</option>
+				</field>
+				<field name="thumbpropertiesspacer" type="spacer" label="--------------------------------- Thumbnail Properties ---------------------------------" class="text"/>
+				<field name="showthumb" type="radio" default="1" label="MOD_LATESTNEWSPLUSDATE_SHOWTHUMB_LABEL" description="MOD_LATESTNEWSPLUSDATE_SHOWTHUMB_DESC">
+					<option value="0">JHIDE</option>
+					<option value="1">JSHOW</option>
+				</field>
+				<field name="loadorder" type="list" default="0" label="MOD_LATESTNEWSPLUSDATE_THUMBPOS_LABEL" description="MOD_LATESTNEWSPLUSDATE_THUMBPOS_DESC">
+					<option value="1">MOD_LATESTNEWSPLUSDATE_VALUE_BEFORE</option>
+					<option value="0">MOD_LATESTNEWSPLUSDATE_VALUE_AFTER</option>
+				</field>
+				<field name="thumb_width" type="text" default="64" label="MOD_LATESTNEWSPLUSDATE_THUMBWIDTH_LABEL" description="MOD_LATESTNEWSPLUSDATE_THUMBWIDTH_DESC" />
+				<field name="thumb_height" type="text" default="64" label="MOD_LATESTNEWSPLUSDATE_THUMBHEIGHT_LABEL" description="MOD_LATESTNEWSPLUSDATE_THUMBHEIGHT_DESC" />
+				<field name="aspect" type="radio" default="0" label="MOD_LATESTNEWSPLUSDATE_PRESERVEASPECT_LABEL" description="MOD_LATESTNEWSPLUSDATE_PRESERVEASPECT_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
+			</fieldset>
+			<fieldset
+				name="advanced">
+
+				<field
+					name="layout"
+					type="modulelayout"
+					label="JFIELD_ALT_LAYOUT_LABEL"
+					description="JFIELD_ALT_MODULE_LAYOUT_DESC" />
+
+				<field
+					name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+
+				<field
+					name="cache"
+					type="list"
+					default="1"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC">
+					<option
+						value="1">JGLOBAL_USE_GLOBAL</option>
+					<option
+						value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
+				<field
+					name="cache_time"
+					type="text"
+					default="900"
+					label="COM_MODULES_FIELD_CACHE_TIME_LABEL"
+					description="COM_MODULES_FIELD_CACHE_TIME_DESC" />
+				<field
+					name="cachemode"
+					type="hidden"
+					default="static">
+					<option
+						value="static"></option>
+				</field>
+			</fieldset>
+
+		</fields>
+	</config>
+</extension>

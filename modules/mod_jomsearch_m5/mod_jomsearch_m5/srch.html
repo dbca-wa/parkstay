@@ -1,0 +1,46 @@
+test<patTemplate:tmpl name="search">
+<form action="{SUBMITURL}" method="GET" name="{FORMNAME}">
+<div class="row">
+<input type="hidden" name="option" value="com_jomres" />
+{PROPERTYNAME}
+{JOMRES_SEARCH_GEO_COUNTRYSEARCH}
+{COUNTRY}
+{JOMRES_SEARCH_GEO_REGIONSEARCH}
+{REGION} 
+{BOOKABLE} 
+<!--{JOMRES_SEARCH_GEO_TOWNSEARCH}-->
+<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+<a href="javascript:void(0);" class="" data-toggle="popover" data-content="{HBOOKABLE}" data-original-title="" title=""><i class="icon-info-2"></i></a> {TOWN} {HARRIVALDATE} {ARRIVALDATE} {HDEPARTUREDATE} {DEPARTUREDATE}
+</div>
+<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"> {THEBUTTON}</div>
+
+<!--{JOMRES_SEARCH_DESCRIPTION_INFO} -->
+<!--{DESCRIPTION}-->
+<!--{JOMRES_SEARCH_FEATURE_INFO}
+{FEATURE}<br/>
+{JOMRES_SEARCH_RTYPES}
+{ROOM_TYPE}
+<!--{JOMRES_SEARCH_AVL_INFO}<br/>
+
+{JOMRES_SEARCH_PTYPES}
+{PTYPE}
+{JOMRES_SEARCH_PRICERANGES}
+{PRICERANGES}
+
+
+{JOMRES_SEARCH_GEO_COUNTRYSEARCH}
+{SELECTCOMBO_COUNTRY}
+{JOMRES_SEARCH_GEO_REGIONSEARCH}
+{SELECTCOMBO_HIDDENDROPDOWNS_REGION}
+{JOMRES_SEARCH_GEO_TOWNSEARCH}
+{SELECTCOMBO_HIDDENDROPDOWNS_TOWN}
+
+{HGUESTNUMBER} {GUESTNUMBER}<br/>
+{HSTARS} {STARS}<br/>
+
+	
+{THEBUTTON}-->
+{HIDDEN}
+</div>
+</form>
+</patTemplate:tmpl>

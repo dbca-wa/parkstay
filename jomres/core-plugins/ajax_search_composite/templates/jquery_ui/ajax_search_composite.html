@@ -1,0 +1,191 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="strip">
+<script type="text/javascript">
+<!--
+jomresJquery(function() {
+	if (jomresJquery("#slider-range").length) {
+		jomresJquery( "#slider-range")[0].slide = null;
+		jomresJquery( "#slider-range" ).slider({
+			range: true,
+			min: {MINPRICE},
+			max: {MAXPRICE},
+			values: [ {MINPRICE}, {MAXPRICE} ],
+			slide: function( event, ui ) {
+				jomresJquery( "#amount" ).val( "{PREPRICE}" + ui.values[ 0 ]+ "{POSTPRICE}" + " - " + "{PREPRICE}" + ui.values[ 1 ]+ "{POSTPRICE}" );
+			},
+			change: function(event,ui) {
+				value1 = jomresJquery( "#slider-range" ).slider( "values", 0 );
+				value2 = jomresJquery( "#slider-range" ).slider( "values", 1 );
+				jomresJquery('input[name$="pricerange_value_from"]').val(value1);
+				jomresJquery('input[name$="pricerange_value_to"]').val(value2);
+				submit_search('{FORM_NAME}');
+			}
+		});
+		jomresJquery( "#amount" ).val( "{PREPRICE}" + jomresJquery( "#slider-range" ).slider( "values", 0 )+ "{POSTPRICE}" +
+			" - " + "{PREPRICE}" + jomresJquery( "#slider-range" ).slider( "values", 1 )+ "{POSTPRICE}" );
+	}
+});
+
+jomresJquery(document).ready(function(){
+	jomresJquery('.country').click(function(){
+		jomresJquery('#country-content').toggle('slow');
+		return false;
+	});
+	jomresJquery('.region').click(function(){
+		jomresJquery('#region-content').toggle('slow');
+		return false;
+	});
+	jomresJquery('.town').click(function(){
+		jomresJquery('#town-content').toggle('slow');
+		return false;
+	});
+
+	jomresJquery('.stars').click(function(){
+		jomresJquery('#stars-content').toggle('slow');
+		return false;
+	});
+	jomresJquery('.features').click(function(){
+		jomresJquery('#features-content').toggle('slow');
+		return false;
+	});
+	jomresJquery('.room_types').click(function(){
+		jomresJquery('#room_types-content').toggle('slow');
+		return false;
+	});
+	jomresJquery('.priceranges').click(function(){
+		jomresJquery('#priceranges-content').toggle('slow');
+		return false;
+	});
+	jomresJquery('.property_types').click(function(){
+		jomresJquery('#property_types-content').toggle('slow');
+		return false;
+	});
+	jomresJquery('.guestnumbers').click(function(){
+		jomresJquery('#guestnumbers-content').toggle('slow');
+		return false;
+	});
+	jomresJquery('.dates').click(function(){
+		jomresJquery('#dates-content').toggle('slow');
+		return false;
+	});
+});
+//-->
+</script>
+
+<a class="fg-button ui-state-default ui-corner-all" onClick="submit_search('{FORM_NAME}')" >{_JOMRES_RETURN_TO_RESULTS}</a>
+<div class="full-width ui-helper-clearfix">
+	<patTemplate:tmpl name="date_head" type="simpleCondition" requiredVars="_jomres_front_availability">
+	<div class="ui-state-default"  style="margin-bottom:10px;">
+		<a class="dates" href="#">{_JOMRES_FRONT_AVAILABILITY}</a>
+	</div>
+	<div id="dates-content" style="padding:10px 0;">
+		<patTemplate:tmpl name="date_rows" >
+		{_JOMRES_COM_MR_VIEWBOOKINGS_ARRIVAL} {ARRIVALDATE}<br/>
+		{_JOMRES_COM_MR_VIEWBOOKINGS_DEPARTURE} {DEPARTUREDATE}
+		<br/>
+		</patTemplate:tmpl>
+	</div>
+	</patTemplate:tmpl>
+	
+	<patTemplate:tmpl name="stars_head" type="simpleCondition" requiredVars="_jomres_com_a_integratedsearch_bytars">
+	<div class="ui-state-default"  style="margin-bottom:10px;">
+		<a class="stars" href="#">{_JOMRES_COM_A_INTEGRATEDSEARCH_BYTARS}</a>
+	</div>
+	<div id="stars-content" style="padding:10px 0;">
+		<patTemplate:tmpl name="stars_rows" >
+		<input type="checkbox" name="stars[]" value="{NUMBER}" {DISABLED} style="vertical-align:middle;" {CHECKED}/>{IMAGE}{NUMBER} ({COUNT})<br/>
+		</patTemplate:tmpl>
+	</div>
+	</patTemplate:tmpl>
+	
+	<patTemplate:tmpl name="price_head" type="simpleCondition" requiredVars="_jomres_search_priceranges" >
+	<div class="ui-state-default" style="margin-bottom: 10px;">
+		<a class="priceranges" href="#">{_JOMRES_SEARCH_PRICERANGES}</a>
+	</div>
+	<div id="priceranges-content" style="padding:10px 0;">
+		<input type="hidden" name="pricerange_value_from" value="" />
+		<input type="hidden" name="pricerange_value_to" value="" />
+		<input type="text" id="amount" style="border:0; color:#f6931f; font-weight:bold;" value=""/>
+		<div id="slider-range" class="ui-helper-clearfix"></div>
+	</div>
+	</patTemplate:tmpl>
+	
+	<patTemplate:tmpl name="country_head" type="simpleCondition" requiredVars="_jomres_search_geo_countrysearch" >
+	<div class="ui-state-default" style="margin-bottom: 10px;">
+		<a class="country" href="#">{_JOMRES_SEARCH_GEO_COUNTRYSEARCH}</a>
+	</div>
+	<div id="country-content" style="padding:10px 0;">
+		<patTemplate:tmpl name="country_rows" >
+		<input type="checkbox" name="countries[]" value="{COUNTRYCODE}" style="vertical-align:bottom;" {CHECKED} />{COUNTRYNAME}<br/>
+		</patTemplate:tmpl>
+	</div>
+	</patTemplate:tmpl>
+	
+	<patTemplate:tmpl name="region_head" type="simpleCondition" requiredVars="_jomres_search_geo_regionsearch" >
+	<div class="ui-state-default"  style="margin-bottom: 10px;">
+		<a class="region" href="#">{_JOMRES_SEARCH_GEO_REGIONSEARCH}</a>
+	</div>
+	</patTemplate:tmpl>
+	<patTemplate:tmpl name="region_rows">
+	{REGIONS}
+	</patTemplate:tmpl>
+
+	<patTemplate:tmpl name="town_head" type="simpleCondition" requiredVars="_jomres_search_geo_townsearch" >
+	<div class="ui-state-default" style="margin-bottom: 10px;">
+		<a class="town" href="#">{_JOMRES_SEARCH_GEO_TOWNSEARCH}</a>
+	</div>
+	</patTemplate:tmpl>
+	<patTemplate:tmpl name="town_rows" >
+	{TOWNS}
+	</patTemplate:tmpl>
+	
+	<patTemplate:tmpl name="room_type_head" type="simpleCondition" requiredVars="_jomres_search_rtypes" >
+	<div class="ui-state-default" style="margin-bottom: 10px;">
+		<a class="room_types" href="#">{_JOMRES_SEARCH_RTYPES}</a>
+	</div>
+	<div id="room_types-content" style="padding:10px 0;">
+		<patTemplate:tmpl name="room_type_rows" >
+		<input type="checkbox" name="room_type_uids[]" value="{ID}" style="vertical-align:bottom;" {CHECKED}/>{TITLE}<br/>
+		</patTemplate:tmpl>
+	</div>
+	</patTemplate:tmpl>
+	
+	<patTemplate:tmpl name="property_type_head" type="simpleCondition" requiredVars="_jomres_search_ptypes" >
+	<div class="ui-state-default" style="margin-bottom: 10px;">
+		<a class="property_types" href="#">{_JOMRES_SEARCH_PTYPES}</a>
+	</div>
+	<div id="property_types-content" style="padding:10px 0;">
+		<patTemplate:tmpl name="property_type_rows" >
+		<input type="checkbox" name="property_type_uids[]" value="{ID}" style="vertical-align:bottom;" {CHECKED}/>{TITLE}<br/>
+		</patTemplate:tmpl>
+	</div>
+	</patTemplate:tmpl>
+	
+	<patTemplate:tmpl name="guestnumber_head" type="simpleCondition" requiredVars="_jomres_com_a_integratedsearch_byguestnumber" >
+	<div class="ui-state-default" style="margin-bottom: 10px;">
+		<a class="guestnumbers" href="#">{_JOMRES_COM_A_INTEGRATEDSEARCH_BYGUESTNUMBER}</a>
+	</div>
+	<div id="guestnumbers-content" style="padding:10px 0;">
+		<patTemplate:tmpl name="guestnumber_rows" >
+		<input type="checkbox" name="guestnumbers[]" value="{NUMBER}" style="vertical-align:bottom;" {CHECKED}/>{NUMBER}<br/>
+		</patTemplate:tmpl>
+	</div>
+	</patTemplate:tmpl>
+	
+	<patTemplate:tmpl name="features_head" type="simpleCondition" requiredVars="_jomres_com_a_integratedsearch_byfeatures" >
+	<div class="ui-state-default" style="margin-bottom: 10px;">
+		<a class="features" href="#">{_JOMRES_COM_A_INTEGRATEDSEARCH_BYFEATURES}</a>
+	</div>
+	<div id="features-content" style="padding:10px 0;" class="ui-helper-hidden">
+		<patTemplate:tmpl name="features_rows" >
+		<div style="height:30px;float:left;"><input type="checkbox" name="feature_uids[]" value="{ID}" {CHECKED} />{ICON}</div>
+		</patTemplate:tmpl>
+	</div>
+	<div style="clear:both;"></div>
+	</patTemplate:tmpl>
+
+</div>
+<input type="hidden" name = "search_form" value="ajax_search_composite" />
+<input type="hidden" name = "property_prefilter" value="{PROPERTY_PREFILTER}" />
+<input type="hidden" name = "ptype_prefilter" value="{PTYPE_PREFILTER}" />
+
+</patTemplate:tmpl>

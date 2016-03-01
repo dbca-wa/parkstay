@@ -1,0 +1,310 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="strip">
+<script>
+function jomres_micromanage_rate_picker(input_type)
+	{
+	if (input_type == "mindaysinput")
+		picker_input = 'picker_mindays_value';
+	else
+		picker_input = 'picker_rate_value';
+	
+	from_value = jomresJquery('input[name=picker_from]').val();
+	to_value = jomresJquery('input[name=picker_to]').val();
+	new_rate = jomresJquery('#'+picker_input).val();
+
+	epoch_from = jomres_micromanage_picker_get_epoch(from_value);
+	epoch_to = jomres_micromanage_picker_get_epoch(to_value);
+	var i = epoch_from;
+	var r_colour = random_colour();
+	
+	while (i <= epoch_to)
+		{
+		jomresJquery("input[name='"+input_type+"["+i/1000+"]']").css("border","2px solid #"+r_colour);
+		jomresJquery("input[name='"+input_type+"["+i/1000+"]']").val(new_rate);
+		tomorrow = new Date( i.getTime() + 86400000 ); 
+		i = tomorrow;
+		}
+	}
+
+function jomres_micromanage_picker_get_epoch(jsdate)
+	{
+	dformat = "{DATE_FORMAT}";
+	var day=0
+	var mon=0
+	var year=0
+	if (dformat=="%d/%m/%Y"){
+		dateArray=jsdate.split("/")
+		day=dateArray[0]
+		mon=dateArray[1]
+		year=dateArray[2]
+		}
+	if (dformat=="%Y/%m/%d"){
+		dateArray=jsdate.split("/")
+		day=dateArray[2]
+		mon=dateArray[1]
+		year=dateArray[0]
+		}
+	if (dformat=="%m/%d/%Y"){
+		dateArray=jsdate.split("/")
+		day=dateArray[1]
+		mon=dateArray[0]
+		year=dateArray[2]
+		}
+	if (dformat=="%d-%m-%Y"){
+		dateArray=jsdate.split("-")
+		day=dateArray[0]
+		mon=dateArray[1]
+		year=dateArray[2]
+		}
+	if (dformat=="%Y-%m-%d"){
+		dateArray=jsdate.split("-")
+		day=dateArray[2]
+		mon=dateArray[1]
+		year=dateArray[0]
+		}
+	if (dformat=="%m-%d-%Y"){
+		dateArray=jsdate.split("-")
+		day=dateArray[1]
+		mon=dateArray[0]
+		year=dateArray[2]
+		}
+	return new Date(Date.UTC(year,mon-1,day,0,0,0)); 
+	}
+
+	// http://www.namepros.com/code/37251-javascript-random-hex-color.html
+	function random_colour()
+		{
+		colours = new Array(14)
+		colours[0]="0"
+		colours[1]="1"
+		colours[2]="2"
+		colours[3]="3"
+		colours[4]="4"
+		colours[5]="5"
+		colours[5]="6"
+		colours[6]="7"
+		colours[7]="8"
+		colours[8]="9"
+		colours[9]="a"
+		colours[10]="b"
+		colours[11]="c"
+		colours[12]="d"
+		colours[13]="e"
+		colours[14]="f"
+
+		digit = new Array(5)
+		colour=""
+		for (i=0;i<6;i++){
+			digit[i]=colours[Math.round(Math.random()*14)]
+			colour = colour+digit[i]
+			}
+		return colour;
+		}
+		
+function select_all(obj)
+	{ var text_val=eval(obj);
+	text_val.focus();
+	text_val.select();
+	}
+	
+jomresJquery(function() {
+    jomresJquery('#interval_price_selector').change(function(){
+        if (jomresJquery(this).val() == "2") {
+            jomresJquery('.tariff_multi_input').hide();
+			jomresJquery('.mindays_multi_input').show();
+			
+			jomresJquery('#manual_input_wrapper').removeClass("ui-widget-content");
+			jomresJquery('#manual_input_wrapper').addClass("ui-state-highlight");
+        } else {
+            jomresJquery('.tariff_multi_input').show();
+			jomresJquery('.mindays_multi_input').hide();
+			jomresJquery('#manual_input_wrapper').removeClass("ui-state-highlight");
+			jomresJquery('#manual_input_wrapper').addClass("ui-widget-content");
+        }
+    });
+});
+
+function set_mindays_by_dow(dow_class)
+	{
+	inputVal = jomresJquery("input[name='"+dow_class+"_mindays']").val();
+	jomresJquery('.'+dow_class+'_mindays').val(inputVal);
+	jomresJquery('.'+dow_class+'_mindays').css("border","1px solid red");
+	}
+
+function set_rates_by_dow(dow_class)
+	{
+	inputVal = jomresJquery("input[name='"+dow_class+"_rates']").val();
+	console.log(dow_class);
+	jomresJquery('.'+dow_class+'_rates').val(inputVal);
+	jomresJquery('.'+dow_class+'_rates').css("border","1px solid red");
+	}
+
+</script>
+<h2 class="page-header">{_JOMRES_COM_MR_LISTTARIFF_LINKTEXT}</h2>
+<form action="{JOMRES_SITEPAGE_URL}" method="post" name="adminForm">
+{JOMRESTOOLBAR}
+<table class="ui-widget-content ui-corner-all" width="100%" border="0">
+	<tr>
+		<td width="30%">{HTARIFFTITLE}</td>
+		<td><input type="text" size="20" class="inputbox" name="tarifftypename" value="{TARIFFTYPENAME}" /></td>
+	</tr>
+	<tr>
+		<td>{HROOMTYPEDROPDOWN}</td>
+		<td>{ROOMTYPEDROPDOWN}</td>
+	</tr>
+	<!--<tr>
+		<td>{HMINDAYS}</td>
+		<td>{MINDAYS_DROPDOWN}
+			<patTemplate:comment><input class="inputbox" type="text" name="mindays" value="{MINDAYS}" class="input-mini"/></patTemplate:comment>
+		</td>
+	</tr>-->
+	<tr>
+		<td>{HMAXDAYS}</td>
+		<td>{MAXDAYS_DROPDOWN}
+			<patTemplate:comment><input class="inputbox" type="text" name="maxdays" value="{MAXDAYS}" class="input-mini"/></patTemplate:comment>
+		</td>
+	</tr>
+	<tr>
+		<td>{HMINPEOPLE}</td>
+		<td>{MINPEOPLE_DROPDOWN}
+			<patTemplate:comment> <input class="inputbox" type="text" name="minpeople" value="{MINPEOPLE}" class="input-mini"/></patTemplate:comment>
+		</td>
+	</tr>
+	<tr>
+		<td>{HMAXPEOPLE}</td>
+		<td>{MAXPEOPLE_DROPDOWN}
+			<patTemplate:comment><input class="inputbox" type="text" name="maxpeople" value="{MAXPEOPLE}" class="input-mini"/></patTemplate:comment>
+		</td>
+	</tr>
+	<tr>
+		<td>{HIGNOREPPPNDROPDOWN}</td>
+		<td>{IGNOREPPPNDROPDOWN}</td>
+	</tr>
+	<tr>
+		<td>{HALLOWWEEKENDSDROPDOWN}</td>
+		<td>{ALLOWWEEKENDSDROPDOWN}</td>
+	</tr>
+	<tr>
+		<td>{HWEEKENDONLY}</td>
+		<td>{WEEKENDONLY}</td>
+	</tr>
+	<tr>
+		<td>{HFIXED_DAYOFWEEK}</td>
+		<td>{FIXED_ARRIVAL_DAYOFWEEK}</td>
+	</tr>
+	<patTemplate:tmpl name="already_selected_rows" type="simpleCondition" requiredVars="hminrooms">
+	<tr>
+		<td>{HMINROOMS}</td>
+		<td>{MINROOMS_ALREADYSELECTED}*</td>
+	</tr>
+	<tr>
+		<td>{HMAXROOMS}</td>
+		<td>{MAXROOMS_ALREADYSELECTED}**</td>
+	</tr>
+	<tr>
+		<td colspan="2" >
+			<p>*{MINROOMS_DESC}</p>
+			<p>**{MAXROOMS_DESC}</p>
+		</td>
+	</tr>
+	</patTemplate:tmpl>
+</table>
+<br />
+
+
+
+<h2>{_JOMRES_MICROMANAGE_PICKERS_SELECTOR}</h2>
+<p>{_JOMRES_MICROMANAGE_PICKERS_SELECTOR_INFO}</p>
+<select id="interval_price_selector" autocomplete="off" class="inputbox">
+	<option value="1">{PICKER_DATERANGES_SET}</option>
+	<option value="2">{_JOMRES_MICROMANAGE_PICKER_SETMINDAYS}</option>
+</select>
+
+<h3 class="tariff_multi_input">{_JOMRES_MICROMANAGE_PICKER_TYPE_DOW}</h3>
+<p class="tariff_multi_input">{PICKER_DAYSOFWEEK}</p>
+
+<h3 class="page-header mindays_multi_input" style="display:none;">{_JOMRES_MICROMANAGE_PICKER_BYDOW}</h3>
+<p class="mindays_multi_input" style="display:none;">{_JOMRES_MICROMANAGE_PICKER_BYDOW_INFO}</p>
+
+<table class="ui-widget-content ui-corner-all" width="100%" border="0">
+	<tr>
+		<patTemplate:tmpl name="prefills" unusedvars="nbsp">
+		<td>
+			<p>{BUTTON}<br />{INPUT}</p>
+		</td>
+		</patTemplate:tmpl>
+	</tr>
+</table>
+<br />
+
+
+
+<h3 class="tariff_multi_input">{_JOMRES_MICROMANAGE_PICKER_TYPE_INTERVAL_RATES}</h3>
+<h3 class="mindays_multi_input" style="display:none;">{_JOMRES_MICROMANAGE_PICKER_TYPE_INTERVAL_MINDAYS}</h3>
+
+<p class="tariff_multi_input">{_JOMRES_MICROMANAGE_PICKER_INSTRUCTIONS_RATES}</p>
+<p class="mindays_multi_input" style="display:none;">{_JOMRES_MICROMANAGE_PICKER_INSTRUCTIONS_MINDAYS}</p>
+
+<table class="ui-widget-content ui-corner-all" width="100%" border="0">
+	<tr>
+		<th class="ui-state-default">{PICKER_DATERANGES_START}</th>
+		<th class="ui-state-default">{PICKER_DATERANGES_END}</th>
+		<th class="ui-state-default tariff_multi_input_header">{PICKER_DATERANGES_RATE}</th>
+		<th class="ui-state-default  mindays_multi_input_header" style="display:none;">{_JOMRES_MICROMANAGE_PICKER_SETMINDAYS}</th>
+		<th class="ui-state-default">&nbsp;<th>
+	</tr>
+	<tr>
+		<td>{PICKER_FROM}</td>
+		<td>{PICKER_TO}</td>
+		<td class="tariff_multi_input">
+			<input type="text" size="5" style="padding: 1px; font-size: 9px;border:solid 1px #cccccc; background-color: #ffffff;" id="picker_rate_value" value="55" />
+		</td>
+		<td class="mindays_multi_input" style="display:none;">
+			<input type="text" size="5" style="padding: 1px; font-size: 9px;border:solid 1px #cccccc; background-color: #ffffff;" id="picker_mindays_value" value="1" />
+		</td>
+		<td class="tariff_multi_input">
+			<input type="button" id="set_value" value="{PICKER_DATERANGES_SET}" onClick="jomres_micromanage_rate_picker('tariffinput')" />
+		</td>
+		<td class="mindays_multi_input" style="display:none;">
+			<input type="button" id="set_value" value="Set minimum days" onClick="jomres_micromanage_rate_picker('mindaysinput')"/>
+		</td>
+	</tr>
+</table>
+<br />
+
+
+<div class="tariff_multi_input"><h3>{_JOMRES_MICROMANAGE_PICKERDROPDOWN_EDITPRICES}</h3></div>
+<div class="mindays_multi_input" style="display:none;"><h3>{_JOMRES_MICROMANAGE_PICKERDROPDOWN_EDITMINDAYS}</h3></div>
+
+<div id="manual_input_wrapper" class="ui-widget-content">
+<table class="ui-corner-all" width="100%" border="0">
+	<patTemplate:tmpl name="daterows" unusedvars="strip">
+	<tr>
+		<th class="ui-state-default">{YEAR} {MONTH}</td>
+	</tr>
+	<tr>
+		<td>
+			<table width="100%" border="0">
+				<tr>
+					<td>{DAYS1}</td>
+				</tr>
+				<tr>
+					<td>{INPUTS1}</td>
+				</tr>
+			</table>
+			<table width="100%" border="0">
+				<tr>
+					<td>{DAYS2}</td>
+				</tr>
+				<tr>
+					<td>{INPUTS2}</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</patTemplate:tmpl>
+</table>
+</div>
+<input type="hidden" name="tarifftypeid" value="{TARIFFTYPEID}" />
+<input type="hidden" name="task" value="saveTariff" />
+</form>
+</patTemplate:tmpl>

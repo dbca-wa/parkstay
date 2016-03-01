@@ -1,0 +1,98 @@
+<patTemplate:tmpl name="pageoutput" >
+<style type="text/css">
+	#selectable_features .ui-selecting { background: #FECA40; }
+	#selectable_features .ui-selected { background: #F39814; color: white; }
+	#selectable_features { list-style-type: none; margin: 0; padding: 0; }
+	#selectable_features li { margin: 3px; padding: 0.4em; font-size: 1em; }
+	</style>
+
+	<script type="text/javascript">
+	var ajaxurl = "{AJAXURL}";
+	
+	jomresJquery(function() {
+		jomresJquery("#selectable_features").selectable({
+			stop: function(){
+				jomresJquery("#result-selectable_features").val('');
+				jomresJquery(".ui-selected", this).each(function(){
+					var id = this.id;
+					var tmp = jomresJquery('#result-selectable_features').val();
+					jomresJquery('#result-selectable_features').val(tmp+id+ ',');
+				});
+			send_search();
+			}
+		});
+	});
+	
+	function send_search(){
+		var property_uids = [];
+		var feature_parameters = jomresJquery('#result-selectable_features').val();
+		if (feature_parameters.length > 0) {
+				jomresJquery.get(ajaxurl+'&task=funky_filter_features&nofollowtmpl',{ field: 'feature_ids', 'value': feature_parameters },
+					function(data){
+						populateDiv("search_results",data);
+						}
+				);
+			}
+		}
+	
+	
+	var clicktohide = '{CLICKTOHIDE}';
+	var clicktoshow = '{CLICKTOSHOW}';
+	
+	jomresJquery(function(){
+		//all hover and click logic for buttons
+		jomresJquery(".fg-button:not(.ui-state-disabled)")
+		.hover(
+			function(){ 
+				jomresJquery(this).addClass("ui-state-hover"); 
+			},
+			function(){ 
+				jomresJquery(this).removeClass("ui-state-hover"); 
+			}
+		)
+		.mousedown(function(){
+				jomresJquery(this).parents('.fg-buttonset-single:first').find(".fg-button.ui-state-active").removeClass("ui-state-active");
+				if( jomresJquery(this).is('.ui-state-active.fg-button-toggleable, .fg-buttonset-multi .ui-state-active') ){ jomresJquery(this).removeClass("ui-state-active"); }
+				else { jomresJquery(this).addClass("ui-state-active"); }
+		})
+		.mouseup(function(){
+			if(! jomresJquery(this).is('.fg-button-toggleable, .fg-buttonset-single .fg-button,  .fg-buttonset-multi .fg-button') ){
+				jomresJquery(this).removeClass("ui-state-active");
+			}
+		});
+		
+	});
+	
+function toggle_review_div(uid)
+	{
+	div_id = "#property_reviews"+uid;
+	div_click_link = '#property_reviews_link'+uid;
+	jomresJquery('div.'+div_id).toggle("slow");
+	jomresJquery(div_click_link).text(jomresJquery(div_click_link).text() == clicktoshow ? clicktohide : clicktoshow);
+	}
+	</script>
+<form action="" method="post" name="adminForm">
+<div class="">
+<table width="100%" class="ui-widget-content">
+	<tr><td colspan="2">{INSTRUCTIONS}</td></tr>
+	<tr>
+		<td width="35%" VALIGN="top">
+			<div class="fg-toolbar fg-buttonset">
+			<ol id="selectable_features" >
+					<patTemplate:tmpl name="resultarray" >
+					<li class="ui-widget ui-widget-content ui-corner-all fg-button" id ="{ID}" >{TITLE}</li></patTemplate:tmpl>
+				
+			</ol>
+			</div>
+		</td>
+		<td width="65%" VALIGN="top">
+			<div id = "search_results">
+						
+			</div>
+		</td>
+	</tr>
+</table>
+<input type="hidden" name="selected" value="" id="result-selectable_features">
+</div>
+</form>
+</patTemplate:tmpl>

@@ -1,0 +1,27 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="strip">
+<table border="0" width="100%" class="ui-widget-content ui-corner-all">
+	<tr>
+		<td colspan="4"><h2>{PAGETITLE}</h2></td>
+	</tr>
+	<tr>
+		<th class="ui-state-default">&nbsp;</th>
+		<th class="ui-state-default">{HEVENT_TITLE}</th>
+		<th class="ui-state-default">{HSTARTDATE}</th>
+		<th class="ui-state-default">{HENDDATE}</th>
+	</tr>
+	<patTemplate:tmpl name="rows" unusedvars="nbsp">
+	<tr class="{CLASS}">
+		<td><img src="http://{EVENT_LOGO}" width="50" height="50"/></td>
+		<td><a href="http://{WEBSITE_URL}" target="_blank">{TITLE}<a/></td>
+		<td>{START_DATE}</td>
+		<td>{END_DATE}</td>
+	</tr>
+	<tr class="{CLASS}">
+		<td colspan="4">
+			{DESCRIPTION}
+		</td>
+	</tr>
+	</patTemplate:tmpl>
+</table>
+<br />
+</patTemplate:tmpl>

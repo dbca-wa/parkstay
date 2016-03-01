@@ -1,0 +1,24 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="nbsp">
+<style type="text/css">
+.featured_listings{width:100%;float:left;margin-bottom:10px;}
+.featured_listings_image{width:125px;float:left;border:5px solid #fff;-moz-border-radius:5px;-webkit-border-radius:5px;-khtml-border-radius:5px;border-radius:5px;}
+.featured_listings_details{/*float:right;width:355px;*/}
+.featured_listings_title{font-size:14px;font-weight:bold;padding-top:10px;}
+.featured_listings_address{margin:0;font-size:11px;}
+.featured_listings_moreinfo{margin:8px;font-weight:bold;text-align:right;float:right;}
+</style>
+<div class="ui-corner-all ui-helper-clearfix">
+	<div id="featured_listings_container">
+	<patTemplate:tmpl name="rows" unusedvars="strip">
+		<div class="featured_listings ui-widget-content ui-corner-all">
+			<div class="featured_listings_image"><a href="{URL}"><img src="{IMAGE}" width="125" height="94" /></a></div>
+			<div class="featured_listings_details">
+				<div class="featured_listings_title">{NAME}&nbsp;{STARS} {SUPERIOR}</div>
+				<div class="featured_listings_address">{STREET}, {TOWN}, {REGION}, {COUNTRY}</div>
+				<div class="featured_listings_moreinfo"><a href="{URL}" class="fg-button ui-state-default ui-corner-all">{MOREINFORMATION}</a></div>
+			</div>
+		</div>
+	</patTemplate:tmpl>
+	</div>
+</div>
+</patTemplate:tmpl>

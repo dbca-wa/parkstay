@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension
+	type="module"
+	version="1.7.0"
+	client="site"
+	method="upgrade">
+	<name>Search module 5</name>
+	<author>Vince Wooll</author>
+	<creationDate>May 2011</creationDate>
+	<copyright>(C) 2011 Vince Wooll</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>support@jomres.net</authorEmail>
+	<authorUrl>http://www.jomres.net</authorUrl>
+	<version>5</version>
+	<description>Search module.</description>
+	<files>
+		<filename module="mod_jomsearch_m5">mod_jomsearch_m5.php</filename>
+		<folder>mod_jomsearch_m5</folder>
+		<filename module="mod_jomsearch_m5">mod_jomsearch_m5/srch.html</filename>
+		<filename module="mod_jomsearch_m5">mod_jomsearch_m5.xml</filename>
+		<filename module="mod_jomsearch_m5">1.5/mod_jomsearch_m5.xml</filename>
+	</files>
+	
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="moduleclass_sfx"
+					type="text"
+					label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL"
+					description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field
+					name="useCols"
+					type="radio"
+					default="0"
+					label="Show links as columns?"
+					description="Any search option that you have defined as link type (where pertinent) will be shown as columns (IE br put on the end of the link)">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field type="spacer" name="geo" label="Simple geographic searching" />
+				<field
+					name="geosearchtype"
+					type="list"
+					default="0"
+					label="Search by property name"
+					description="Show the search by property name input">
+					<option
+						value="">None</option>
+					<option
+						value="town">Town</option>
+					<option
+						value="region">Region</option>
+					<option
+						value="country">Country</option>
+				</field>
+				<field
+					name="geosearch_dropdown"
+					type="radio"
+					default="0"
+					label="Show as dropdown?"
+					description="Set this to no to show the list as links">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field type="spacer" name="geo" label="Select Combo dropdown" />
+				<field
+					name="selectcombo"
+					type="radio"
+					default="0"
+					label="Search region by select combo dropdown"
+					description="Offer a search dropdown to filter through countries/regions/towns">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field type="spacer" name="geo" label="Property name" />
+				<field
+					name="propertyname"
+					type="radio"
+					default="0"
+					label="Search by property name"
+					description="Show the search by property name input">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field
+					name="propertyname_dropdown"
+					type="radio"
+					default="0"
+					label="Show as dropdown?"
+					description="Set this to no to show the list as links">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field type="spacer" name="geo" label="Property type" />
+				<field
+					name="ptype"
+					type="radio"
+					default="0"
+					label="Search by property type"
+					description="Show the search by property type input">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field
+					name="ptype_dropdown"
+					type="radio"
+					default="0"
+					label="Show as dropdown?"
+					description="Set this to no to show the list as links">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field type="spacer" name="geo" label="Room type" />
+				<field
+					name="room_type"
+					type="radio"
+					default="0"
+					label="Search by room type"
+					description="Show the search by room type input">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field
+					name="room_type_dropdown"
+					type="radio"
+					default="0"
+					label="Show as dropdown?"
+					description="Set this to no to show the list as links">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field type="spacer" name="geo" label="Property features" />
+				<field
+					name="features"
+					type="radio"
+					default="0"
+					label="Search by features"
+					description="Show the search by feature input">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field
+					name="features_dropdown"
+					type="radio"
+					default="0"
+					label="Show as dropdown?"
+					description="Set this to no to show the list as images and checkboxes">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field
+					name="featurecols"
+					type="integer"
+					first="1"
+					last="10"
+					step="1"
+					default="5"
+					label="Feature columns"
+					description="The number of feature icons that can be shown before a br is inserted to go to next row." />
+				<field type="spacer" name="geo" label="Free text search" />
+				<field
+					name="description"
+					type="radio"
+					default="0"
+					label="Search bydescription"
+					description="Show the search by description input">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field type="spacer" name="geo" label="By availability" />
+				<field
+					name="availability"
+					type="radio"
+					default="1"
+					label="Search by availability"
+					description="Show the search by availability input">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field type="spacer" name="geo" label="By price range" />
+				<field
+					name="priceranges"
+					type="radio"
+					default="0"
+					label="Search by price ranges"
+					description="Show the search by price ranges input">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field
+					name="pricerange_increments"
+					type="integer"
+					first="1"
+					last="10000"
+					step="1"
+					default="10"
+					label="Price range increments"
+					description="Jomres will look at all the values in the tariffs then work out a series of price ranges based on the increments value you set here." />
+				<field type="spacer" name="geo" label="By guest number" />
+				<field
+					name="guestnumber"
+					type="radio"
+					default="0"
+					label="Search by guest numbers"
+					description="This will allow users to search for properties that have specific tariffs for specific guest numbers.">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+				<field type="spacer" name="geo" label="By stars" />
+				<field
+					name="stars"
+					type="radio"
+					default="0"
+					label="Search by stars"
+					description="Show the search by star input. Note that this is not the number of review stars, it is the star rating, eg. AA 4 stars.">
+					<option
+						value="1">JYES</option>
+					<option
+						value="0">JNO</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

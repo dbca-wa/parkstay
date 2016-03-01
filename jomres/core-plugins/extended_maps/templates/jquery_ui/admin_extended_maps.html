@@ -1,0 +1,75 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="nbsp">
+<h2>{PAGETITLE}</h2>
+<form action="{JOMRES_SITEPAGE_URL_ADMIN}" method="post" name="adminForm">
+{JOMRESTOOLBAR}
+<table class="ui-widget-content ui-corner-all" width="100%" border="0">
+	<tr>
+        <td colspan="2"><h3>{HMAPSETTINGS}</h3></td>
+    </tr>
+    <tr>
+        <td>{HOVERRIDE_PROPERTYLIST}</td>
+        <td>{OVERRIDE_PROPERTYLIST}</td>
+    </tr>
+    <tr>
+        <td width="30%">{HWIDTH}</td>
+        <td><input type="text" name="width" value="{WIDTH}" /></td>
+    </tr>
+    <tr>
+        <td>{HHEIGHT}</td>
+        <td><input type="text" name="height" value="{HEIGHT}" /></td>
+    </tr>
+    <tr>
+        <td>{HMAPTYPE}</td>
+        <td>{MAPTYPE}</td>
+    </tr>
+	<tr>
+        <td colspan="2"><h3>{HMARKERSETTINGS}</h3></td>
+    </tr>
+	<tr>
+        <td>{HGROUPMARKERS}</td>
+        <td>{GROUPMARKERS}</td>
+    </tr>
+    <!--<tr>
+        <td>{HSRPICON}</td>
+        <td>{LIVESITE}<input type="text" name="srpicon" value="{SRPICON}" size="70" /></td>
+    </tr>
+    <tr>
+        <td>{HMRPICON}</td>
+        <td>{LIVESITE}<input type="text" name="mrpicon" value="{MRPICON}" size="70" /></td>
+    </tr>-->
+    <tr>
+        <td>{HINFOICON}</td>
+        <td>{LIVESITE}<input type="text" name="infoicon" value="{INFOICON}" size="70" /></td>
+    </tr>
+    <tr>
+        <td colspan="2"><h3>{HPOPUPSETTINGS}</h3></td>
+    </tr>
+    <tr>
+        <td>{HPOPUP_WIDTH}</td>
+        <td><input type="text" name="popupwidth" value="{POPUP_WIDTH}"/></td>
+    </tr>
+    <tr>
+        <td>{HIMAGE_WIDTH}</td>
+        <td><input type="text" name="img_width" value="{IMAGE_WIDTH}"/></td>
+    </tr>
+    <tr>
+        <td>{HIMAGE_HEIGHT}</td>
+        <td><input type="text" name="img_height" value="{IMAGE_HEIGHT}"/></td>
+    </tr>
+    <tr>
+        <td>{HSHOW_DESCRIPTION}</td>
+        <td>{SHOW_DESCRIPTION}</td>
+    </tr>
+    <tr>
+        <td>{HTRIM_DESCRIPTION}</td>
+        <td>{TRIM_DESCRIPTION}</td>
+    </tr>
+    <tr>
+        <td>{HTRIM_VALUE}</td>
+        <td><input type="text" name="trim_value" value="{TRIM_VALUE}"/></td>
+    </tr>
+</table>
+<input type="hidden" name="no_html" value="1" />
+<input type="hidden" name="task" value="save_extended_maps" />
+</form>
+</patTemplate:tmpl>

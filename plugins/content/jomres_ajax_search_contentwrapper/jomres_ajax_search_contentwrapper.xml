@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="content">
+	<name>plg_content_jomres_ajax_search_contentwrapper</name>
+	<author>Vince Wooll</author>
+	<creationDate>January 2012</creationDate>
+	<copyright>Copyright (C) 2012 Vince Wooll All rights reserved.</copyright>
+	<license>GNU General Public License version 2</license>
+	<authorEmail>support@jomres.net</authorEmail>
+	<authorUrl>www.jomres.net</authorUrl>
+	<version>1</version>
+	<description>Jomres Ajax search asamodule Content Wrapper</description>
+	<files>
+		<filename plugin="jomres_ajax_search_contentwrapper">jomres_ajax_search_contentwrapper.php</filename>
+		<filename>index.html</filename>
+	</files>
+</extension>

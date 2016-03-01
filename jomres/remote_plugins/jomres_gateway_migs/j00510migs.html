@@ -1,0 +1,109 @@
+<patTemplate:tmpl name="edit_gateway" unusedvars="nbsp">
+<html>
+<head>
+<link href="jomres/remote_plugins/jomres_gateway_migs/osdcs-conf.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<div class="gatewey-name"><span>{GATEWAYNAME}</span></div>
+
+<div class="leftline">&nbsp;</div>
+<div class="rigthline">&nbsp;</div>
+<div class="ugolleft">&nbsp;</div>
+<div class="ugolright">&nbsp;</div>
+<!--<div style="text-align:center; background:url('../jomres/remote_plugins/jomres_gateway_pagamenti/line.gif') repeat-x scroll center top transparent; padding-top:15px;">&nbsp;</div>-->
+<form class="osdcsline" action="index.php?option=com_jomres" method="post" name="adminForm">
+<div class="osdcsline1">
+<div class="gatelogo">{GATEWAYLOGO}</div>
+<a target='_blank' href='http://www.osdcs.com'><img class="rekimg" src='../jomres/remote_plugins/jomres_gateway_migs/osdcs.gif' /></a>
+</div>
+{JOMRESTOKEN}
+
+<table class="tableclass" align="center">
+	<tr>
+		 <th class="tablethname">Name</th>
+		 <th class="tablethvalue">Value</th>
+		 <th class="tablethdisk">Description</th>
+	</tr>
+	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{ACTIVE_HELP}</td>
+		 <td align="left" valign="top">{ACTIVE}</td>
+		 <td align="left" valign="top">{ACTIVE_HELP_DESC}</td>
+	</tr>
+	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{ACCESSCODE_HELP}</td>
+		 <td align="left" valign="top"><input type="text" class="inputbox" name="accesscode" value="{ACCESSCODE}" /></td>
+		 <td align="left" valign="top">{ACCESSCODE_HELP_DESC}</td>
+	</tr>   	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{MERCHANTID_HELP}</td>
+		 <td align="left" valign="top"><input type="text" class="inputbox" name="merchantid" value="{MERCHANTID}" /></td>
+		 <td align="left" valign="top">{MERCHANTID_HELP_DESC}</td>
+	</tr>   	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{LOCALE_HELP}</td>
+		 <td align="left" valign="top"><input type="text" class="inputbox" name="locale" value="{LOCALE}" /></td>
+		 <td align="left" valign="top">{LOCALE_HELP_DESC}</td>
+	</tr>   	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{CURRENCY_HELP}</td>
+		 <td align="left" valign="top">{CURRENCY}</td>
+		 <td align="left" valign="top">{CURRENCY_HELP_DESC}</td>
+	</tr>   	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{SECURE_HELP}</td>
+		 <td align="left" valign="top"><input type="text" class="inputbox" name="secure" value="{SECURE}" /></td>
+		 <td align="left" valign="top">{SECURE_HELP_DESC}</td>
+	</tr>   	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{RETURL_HELP}</td>
+		 <td align="left" valign="top"><input type="text" class="inputbox" name="returl" value="{RETURL}" /></td>
+		 <td align="left" valign="top">{RETURL_HELP_DESC}</td>
+	</tr>   	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{REFURL_HELP}</td>
+		 <td align="left" valign="top"><input type="text" class="inputbox" name="refurl" value="{REFURL}" /></td>
+		 <td align="left" valign="top">{REFURL_HELP_DESC}</td>
+	</tr>
+	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{TEST_HELP}</td>
+		 <td align="left" valign="top">{TEST}</td>
+		 <td align="left" valign="top">{TEST_HELP_DESC}</td>
+	</tr>
+	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{USEFAX_HELP}</td>
+		 <td align="left" valign="top">{USEFAX}</td>
+		 <td align="left" valign="top">{USEFAX_HELP_DESC}</td>
+	</tr>	
+	<tr align="center" valign="middle">
+		 <td align="left" valign="top">{FAXFIELDNAME_HELP}</td>
+		 <td align="left" valign="top"><input type="text" class="inputbox" name="faxfieldname" value="{FAXFIELDNAME}" /></td>
+		 <td align="left" valign="top">{FAXFIELDNAME_HELP_DESC}</td>
+	</tr>
+</table>
+<input type="hidden" name="plugin" value="{GATEWAY}" />
+<input type="hidden" name="task" value="savePlugin" />
+<div class="submitbut"><input type="submit" value="Submit" class="button" ></div>
+</form>
+<div class="ugolleftbut">&nbsp;</div>
+<div class="ugolrightbut">&nbsp;</div>
+<script>
+
+				(function($){
+					// Turn radios into btn-group
+					$('.radio.btn-group label').addClass('btn')
+					$(".btn-group label:not(.active)").click(function(){
+						var label = $(this);
+						var input = $('#' + label.attr('for'));
+
+						if (!input.prop('checked')){
+							label.closest('.btn-group').find("label").removeClass('active btn-primary');
+							label.addClass('active btn-primary');
+							input.prop('checked', true);
+						}
+					});
+					$(".btn-group input[checked=checked]").each(function(){
+						$("label[for=" + $(this).attr('id') + "]").addClass('active btn-primary');
+					});
+				})(jQuery);
+			
+</script>
+
+</body>
+</html>
+</patTemplate:tmpl>

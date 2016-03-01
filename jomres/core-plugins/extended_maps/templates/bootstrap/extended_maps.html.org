@@ -1,0 +1,180 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="strip">
+
+<script language="javascript" type="text/javascript">
+
+var map;
+var markers = [];
+var locations = [];
+var curr_infw;
+var type = [];
+
+jomresJquery(document).ready(function() {
+	var options = {
+	zoom: 2,
+	center: new google.maps.LatLng(0, 0),
+	mapTypeId: google.maps.MapTypeId.{MAPTYPE}{SUPPRESS_POIS}
+	}
+	
+	
+	<!-- events -->
+	<patTemplate:tmpl name="events" type="simpleCondition" requiredVars="popup"  unusedvars="nbsp">
+	locations.push([{LAT},{LONG},'{POPUP}','{ICON}',"ALL"]);
+	</patTemplate:tmpl>
+	<!-- attractions -->
+	<patTemplate:tmpl name="attractions" type="simpleCondition" requiredVars="popup"  unusedvars="nbsp">
+	locations.push([{LAT},{LONG},'{POPUP}','{ICON}',"ALL"]);
+	</patTemplate:tmpl>
+	<!-- properties -->
+	<patTemplate:tmpl name="rows" type="simpleCondition" requiredVars="icon"  unusedvars="nbsp">
+	locations.push([{LAT},{LONG},'{POPUP}','{ICON}',{PTYPE},'{PROPERTY_NAME}']);
+	</patTemplate:tmpl>
+	
+	map = new google.maps.Map(document.getElementById('map_canvas'), options);
+	
+	for (var i = 0; i < locations.length; i++) {
+		makeMarker(locations[i]);
+		}
+	//{GROUPMARKERS}
+	AutoCenter();
+	
+	//{WEATHER_LAYER}
+	{PANORAMIO_LAYER}
+	{TRANSIT_LAYER}
+	{TRAFFIC_LAYER}
+	{BICYCLING_LAYER}
+	
+	});
+	
+
+function makeMarker(location) {
+	var lat = location[0];
+	var long = location[1];
+	var content = location[2];
+	var icon = location[3];
+    var type=location[4];
+    var name = location[5];
+	
+	var markerOptions = {
+		map: map, 
+		position: new google.maps.LatLng(lat,long),
+		icon : icon,
+		visible: true
+		};
+	var marker = new google.maps.Marker(markerOptions);
+	marker.mycategory = type;
+
+	var infowindow = new google.maps.InfoWindow({
+		content: content
+		});
+	google.maps.event.addListener(marker, 'click', function() {
+		if(curr_infw) { curr_infw.close();} // We check to see if there is an info window stored in curr_infw, if there is, we use .close() to hide the window
+		curr_infw = infowindow; // Now we put our new info window in to the curr_infw variable
+		infowindow.open(map, marker); // Now we open the window
+		});
+
+        var infowindow1 = new google.maps.InfoWindow({
+		content: name
+	});
+google.maps.event.addListener(marker, 'mouseover', function() {
+		if(curr_infw) { curr_infw.close();} // We check to see if there is an info window stored in curr_infw, if there is, we use .close() to hide the window
+		curr_infw = infowindow1; // Now we put our new info window in to the curr_infw variable
+		infowindow1.open(map, marker); // Now we open the window
+  });
+
+        markers.push(marker);
+	
+	}
+
+	//
+function AutoCenter() {
+	//  Create a new viewpoint bound
+	var bounds = new google.maps.LatLngBounds();
+	//  Go through each...
+	jomresJquery.each(markers, function (index, marker) {
+		bounds.extend(marker.position);
+		});
+	//  Fit these bounds to the map
+	map.fitBounds(bounds);
+	}
+
+
+function show(category) {
+//alert(category);
+//alert(document.getElementById("theatrebox").checked);
+        for (var i=0; i<markers.length; i++) { 
+        if(document.getElementById("theatrebox").checked == true &&  document.getElementById("golfbox").checked == false) {
+          if (markers[i].mycategory == category) {
+            markers[i].setVisible(true); 
+          }
+		  else {
+		 // alert(i); 
+		  markers[i].setVisible(false);  
+		  }
+          }
+          else  if (document.getElementById("theatrebox").checked == true && document.getElementById("golfbox").checked == true) {
+          
+         // if (markers[i].mycategory == category) {
+            markers[i].setVisible(true); 
+         // }
+          
+          }
+          else if (document.getElementById("theatrebox").checked == false && document.getElementById("golfbox").checked == true) {
+          if (markers[i].mycategory == category) {
+            markers[i].setVisible(true); 
+          }
+          else {
+           markers[i].setVisible(false);
+          }
+          }
+            else if (document.getElementById("theatrebox").checked == false && document.getElementById("golfbox").checked == false) {
+            markers[i].setVisible(true); 
+          }
+        }
+		
+        // == check the checkbox ==
+        document.getElementById(category+"box").checked = true;
+        
+       // {GROUPMARKERS}
+	//AutoCenter();
+}
+
+      // == hides all markers of a particular category, and ensures the checkbox is cleared ==
+      function hide(category) {
+        for (var i=0; i<markers.length; i++) { //alert(markers[i].mycategory);
+         
+            markers[i].setVisible(false);
+         
+        }
+        // == clear the checkbox ==
+        document.getElementById(category+"box").checked = false;
+        // == close the info window, in case its open on a marker that we just hid
+        map.closeInfoWindow();
+      }
+
+ function boxclick(box,category) {
+        if (box.checked) { //alert(category);
+          show(category);
+        } else {
+          show(category); //hide(category);
+        }
+        // == rebuild the side bar
+       // makeSidebar();
+      }
+
+	 function check() 
+    { 
+		if(document.getElementById('bookable').checked)
+       { window.location = "http://localhost/parkstay_8232/index.php?option=com_jomres&task=extended_maps&ptype_ids=13";}
+		else if(!document.getElementById('bookable').checked || document.getElementById('All').checked )
+		{ window.location = "http://localhost/parkstay_8232/index.php?option=com_jomres&task=extended_maps";}
+    }
+</script>
+
+  <form action="#">
+      Only bookable: <input type="checkbox" id="theatrebox" onclick="boxclick(this,'13')" /> &nbsp;&nbsp;
+       Accomodation: <input type="checkbox" id="golfbox" onclick="boxclick(this,'14')" /> &nbsp;&nbsp;
+    <!-- Tourist Information: <input type="checkbox" id="infobox" onclick="boxclick(this,'info')" /><br / -->
+    </form> 
+		
+<div id="map_canvas" class="row"></div>
+</patTemplate:tmpl>

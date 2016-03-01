@@ -1,0 +1,130 @@
+/* CSS Document */
+
+.gatewey-name {
+    margin-bottom:20px;
+}
+
+.gatewey-name span {
+    background-color:#C8C8FF;
+}
+
+.leftline {
+    background:url('/jomres/remote_plugins/jomres_gateway_migs/line_left.gif') repeat-y scroll center right transparent;
+     height:100%;
+      z-index:-1; 
+      width:99%; 
+      position:absolute;
+}
+
+.rigthline {
+	background:url('/jomres/remote_plugins/jomres_gateway_migs/line_left.gif') repeat-y scroll center left transparent; 
+	height:100%; 
+	position:absolute; 
+	width:8px;
+}
+
+.ugolleft {
+	margin-top /*\**/:-1px\9; 
+	background:url('/jomres/remote_plugins/jomres_gateway_migs/ugol_left_top.gif') no-repeat scroll center left transparent; 
+	height:17px; 
+	position:absolute; 
+	width:19px;
+}
+
+.ugolright {
+	margin-top /*\**/:-7px !important\9; 
+	margin-top:-1px; 
+	background:url('/jomres/remote_plugins/jomres_gateway_migs/ugol_right_top.gif') no-repeat scroll center right transparent; 
+	height:17px; 
+	position:absolute; 
+	width:99%;
+}
+
+.osdcsline {
+	width /*\**/:99%\9; 
+	margin-bottom /*\**/:16px\9; 
+	background:url('/jomres/remote_plugins/jomres_gateway_migs/line.gif') repeat-x scroll center bottom transparent; 
+	padding-bottom:20px; 
+	height:100%;
+}
+
+.osdcsline1 {
+	height /*\**/:30%\9; 
+	text-align:center; 
+	background:url('/jomres/remote_plugins/jomres_gateway_migs/line.gif') repeat-x scroll center top transparent; 
+	padding-top:15px;
+}
+
+.gatelogo {
+	float:left;
+    padding-left:20px;
+}
+
+.rekimg {
+	width:70%; 
+	border:0 none;
+}
+
+.tableclass {
+	padding-left:20px;
+	padding-right:20px; 
+	margin-top:10px;
+	min-width:550px;
+}
+
+.tablethname {
+	background:none repeat scroll 0 0 #1F9A26; 
+	color:#FFFEF9; 
+	font-weight:bold; 
+	line-height:20px; 
+	text-align:center;
+}
+
+.tablethvalue {
+	width:146px; 
+	background:none repeat scroll 0 0 #1F9A26; 
+	color:#FFFEF9; 
+	font-weight:bold; 
+	line-height:20px; 
+	text-align:center;
+}
+
+.tablethdisk {
+	background:none repeat scroll 0 0 #1F9A26; 
+	color:#FFFEF9; 
+	font-weight:bold; 
+	line-height:20px; 
+	text-align:center; 
+	min-width:160px;
+}
+
+.tableclass td {
+	background-color:#bae4b3;
+}
+
+.submitbut {
+	text-align:center;
+	margin-top:10px;
+}	
+
+.submitbut input {
+	background-color:#55BD42;
+	color:#FFFFFF;
+	font-weight:bold;
+}	
+
+.ugolleftbut {
+	background:url('/jomres/remote_plugins/jomres_gateway_migs/ugol_left_botton.gif') no-repeat scroll center left transparent; 
+	height:17px; 
+	position:absolute; 
+	width:19px; 
+	margin-top:-34px;
+}
+
+.ugolrightbut {
+	background:url('/jomres/remote_plugins/jomres_gateway_migs/ugol_right_botton.gif') no-repeat scroll center right transparent; 
+	height:17px; 
+	position:absolute; 
+	width:99%; 
+	margin-top:-34px;
+}

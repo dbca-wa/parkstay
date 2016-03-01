@@ -1,0 +1,123 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="nbsp">
+<h2 class="page-header">{PAGETITLE}</h2>
+<form action="{JOMRES_SITEPAGE_URL_ADMIN}" method="post" name="adminForm" class="form-horizontal">
+{JOMRESTOOLBAR}
+<h3 class="page-header">{HMAPSETTINGS}</h3>
+<div class="control-group">
+	<div class="control-label">
+		{HOVERRIDE_PROPERTYLIST}
+	</div>
+	<div class="controls">
+        {OVERRIDE_PROPERTYLIST}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{HWIDTH}
+	</div>
+	<div class="controls">
+        <input type="text" name="width" value="{WIDTH}" class="input-mini"/>
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{HHEIGHT}
+	</div>
+	<div class="controls">
+        <input type="text" name="height" value="{HEIGHT}" class="input-mini"/>
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{HMAPTYPE}
+	</div>
+	<div class="controls">
+        {MAPTYPE}
+	</div>
+</div>
+<h3 class="page-header">{HMARKERSETTINGS}</h3>
+<div class="control-group">
+	<div class="control-label">
+		{HGROUPMARKERS}
+	</div>
+	<div class="controls">
+        {GROUPMARKERS}
+	</div>
+</div>
+<!--<div class="control-group">
+	<div class="control-label">
+		{HSRPICON}
+	</div>
+	<div class="controls">
+        <span class="help-inline">{LIVESITE}</span><input type="text" name="srpicon" value="{SRPICON}" class="input-xxlarge"/>
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{HMRPICON}
+	</div>
+	<div class="controls">
+		<span class="help-inline">{LIVESITE}</span><input type="text" name="mrpicon" value="{MRPICON}" class="input-xxlarge"/>
+	</div>
+</div>-->
+<div class="control-group">
+	<div class="control-label">
+		{HINFOICON}
+	</div>
+	<div class="controls">
+        <span class="help-inline">{LIVESITE}</span><input type="text" name="infoicon" value="{INFOICON}" class="input-xxlarge"/>
+	</div>
+</div>
+<h3 class="page-header">{HPOPUPSETTINGS}</h3>
+<div class="control-group">
+	<div class="control-label">
+		{HPOPUP_WIDTH}
+	</div>
+	<div class="controls">
+        <input type="text" name="popupwidth" value="{POPUP_WIDTH}" class="input-mini"/>
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{HIMAGE_WIDTH}
+	</div>
+	<div class="controls">
+        <input type="text" name="img_width" value="{IMAGE_WIDTH}" class="input-mini"/>
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{HIMAGE_HEIGHT}
+	</div>
+	<div class="controls">
+        <input type="text" name="img_height" value="{IMAGE_HEIGHT}" class="input-mini"/>
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{HSHOW_DESCRIPTION}
+	</div>
+	<div class="controls">
+        {SHOW_DESCRIPTION}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{HTRIM_DESCRIPTION}
+	</div>
+	<div class="controls">
+        {TRIM_DESCRIPTION}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{HTRIM_VALUE}
+	</div>
+	<div class="controls">
+        <input type="text" name="trim_value" value="{TRIM_VALUE}" class="input-mini"/>
+	</div>
+</div>
+<input type="hidden" name="no_html" value="1" />
+<input type="hidden" name="task" value="save_extended_maps" />
+</form>
+</patTemplate:tmpl>

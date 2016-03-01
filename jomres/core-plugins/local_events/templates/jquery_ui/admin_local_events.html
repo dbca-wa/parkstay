@@ -1,0 +1,15 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="strip">
+<h2>Local Events Settings</h2>
+<p>{_JRPORTAL_LOCAL_EVENTS_SETTINGS_RADIUS_DESC}</p>
+<form action="{JOMRES_SITEPAGE_URL_ADMIN}" method="post" name="adminForm">
+{JOMRESTOOLBAR}
+<table class="ui-widget-content ui-corner-all" width="100%" border="0">
+    <tr>
+        <td width="30%">{_JRPORTAL_LOCAL_EVENTS_SETTINGS_RADIUS}</td>
+        <td><input type="text" name="radius" value="{RADIUS}" /></td>
+    </tr>
+</table>
+<input type="hidden" name="no_html" value="1" />
+<input type="hidden" name="task" value="save_local_events_settings" />
+</form>
+</patTemplate:tmpl>

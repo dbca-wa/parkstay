@@ -1,0 +1,95 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="strip">
+<h2 class="page-header">{PAGETITLE}</h2>
+<form action="{JOMRES_SITEPAGE_URL_ADMIN}" method="post" name="adminForm" class="form-horizontal">
+{JOMRESTOOLBAR}
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_MODAL}
+	</div>
+	<div class="controls">
+		{MODAL}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYSTARS}
+	</div>
+	<div class="controls">
+		{BY_STARS}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYPRICES}
+	</div>
+	<div class="controls">
+		{BY_PRICE}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYFEATURES}
+	</div>
+	<div class="controls">
+		{BY_FEATURES}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYCOUNTRY}
+	</div>
+	<div class="controls">
+		{BY_COUNTRY}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYREGION}
+	</div>
+	<div class="controls">
+		{BY_REGION}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYTOWN}
+	</div>
+	<div class="controls">
+		{BY_TOWN}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYROOMTYPE}
+	</div>
+	<div class="controls">
+		{BY_ROOMTYPE}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYPROPERTYTYPE}
+	</div>
+	<div class="controls">
+		{BY_PROPERTYTYPE}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYGUESTNUMBER}
+	</div>
+	<div class="controls">
+		{BY_GUESTNUMBER}
+	</div>
+</div>
+<div class="control-group">
+	<div class="control-label">
+		{_JOMRES_AJAX_SEARCH_COMPOSITE_BYDATES}
+	</div>
+	<div class="controls">
+		{BY_DATE}
+	</div>
+</div>
+<input type="hidden" name="task" value="save_ajax_search_composite" />
+</form>
+</patTemplate:tmpl>

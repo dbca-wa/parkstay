@@ -1,0 +1,84 @@
+<patTemplate:tmpl name="search">
+
+<style type="text/css">
+  fieldset {  }
+  fieldset legend { width: 100%; }
+  fieldset legend div { margin: 0.3em 0.5em; }
+  fieldset .field { margin: 0.5em; padding: 0.5em; }
+  fieldset .field label { margin-right: 0.4em; }
+</style>
+
+zz
+<form action="{SUBMITURL}" method="GET" name="{FORMNAME}">
+<input type="hidden" name="option" value="com_jomres" />
+{PROPERTYNAME}
+{JOMRES_SEARCH_DESCRIPTION_INFO}
+{DESCRIPTION}
+
+<fieldset class="well">
+	<div class="form-inline">
+		<h5>
+			{JOMRES_SEARCH_AVL_INFO}
+		</h5>
+		<br/>
+		{HARRIVALDATE} {ARRIVALDATE} {HDEPARTUREDATE} {DEPARTUREDATE}
+		
+		<!--
+		<div class="field">
+			<label>{JOMRES_SEARCH_GEO_COUNTRYSEARCH}</label>{SELECTCOMBO_COUNTRY}
+			<label>{JOMRES_SEARCH_GEO_REGIONSEARCH}</label>{SELECTCOMBO_HIDDENDROPDOWNS_REGION}
+			<label>{JOMRES_SEARCH_GEO_TOWNSEARCH}</label>{SELECTCOMBO_HIDDENDROPDOWNS_TOWN}
+		</div>
+		-->
+	</div>
+	<br/>
+	<div class="form-horizontal">
+		<fieldset>
+			<div class="control-group">
+				<label class="control-label" for="room_type">{JOMRES_SEARCH_RTYPES}</label>
+				<div class="controls">
+					{ROOM_TYPE}
+				</div> 
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="priceranges">{JOMRES_SEARCH_PRICERANGES}</label>
+				<div class="controls">
+					{PRICERANGES}
+				</div> 
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="ptype">{JOMRES_SEARCH_PTYPES}</label>
+				<div class="controls">
+					{PTYPE}
+				</div> 
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="guestnumber">{HGUESTNUMBER}</label>
+				<div class="controls">
+					{GUESTNUMBER}
+				</div> 
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="stars">{HSTARS}</label>
+				<div class="controls">
+					{STARS}
+				</div> 
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="room_type">{JOMRES_SEARCH_FEATURE_INFO}</label>
+				<div class="controls">
+					{FEATURE}
+				</div> 
+			</div>
+			<div class="form-actions">
+				{THEBUTTON}
+			</div>
+		</fieldset>
+	</div>
+</fieldset>
+
+
+{HIDDEN}
+</form>
+
+</patTemplate:tmpl>

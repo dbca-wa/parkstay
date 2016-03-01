@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="content">
+	<name>plg_content_jomres_asamodule_mambot</name>
+	<author>Vince Wooll</author>
+	<creationDate>January 2012</creationDate>
+	<copyright>Copyright (C) 2012 Vince Wooll All rights reserved.</copyright>
+	<license>GNU General Public License version 2</license>
+	<authorEmail>support@jomres.net</authorEmail>
+	<authorUrl>www.jomres.net</authorUrl>
+	<version>1</version>
+	<description><![CDATA[Jomres ASAmodule content mambot. Show Jomres pages in your Joomla content. Whatever you can do in Jomres ASAModule, you can replicate the output in this mambot. Create the tag like {asamambot task "arguments"} so for example {asamambot remoteavailability "&id=1"}]]></description>
+	<files>
+		<filename plugin="jomres_asamodule_mambot">jomres_asamodule_mambot.php</filename>
+		<filename>index.html</filename>
+	</files>
+</extension>

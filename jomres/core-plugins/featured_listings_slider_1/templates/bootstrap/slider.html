@@ -1,0 +1,49 @@
+<patTemplate:tmpl name="pageoutput" unusedvars="strip">
+<script type="text/javascript">
+<!--
+jomresJquery(document).ready(function() {
+	jomresJquery("#featured_listings_slider_1").carousel({
+	interval: 6000
+});
+});
+-->
+</script>
+<!--
+<style type="text/css">
+.carousel {margin:0;}
+.carousel-caption{background:none repeat scroll 0 0 rgba(240, 240, 240, 0.75)}
+.carousel-caption h4, .carousel-caption p {color:inherit;}
+#featured_listings_slider_1 {
+    background: none repeat scroll 0 0 #DFEFFC;
+    border-radius: 4px 4px 4px 4px;
+    padding: 10px 20px 20px;
+}
+</style>
+-->
+<div id="featured_listings_slider_1" class="carousel slide">
+	<!-- Carousel items -->
+	<div class="carousel-inner">
+		<patTemplate:tmpl name="rows">
+		<div class="{ACTIVE} item">
+			<img src="{PROPERTY_IMAGE}" alt="{TITLE}" />
+<div class="carousel-caption">
+                     <div class="row">
+<div class="col-xs-12 col-sm-8 col-md-10 col-lg-10">
+                     <h4>{PROPERTY_NAME}</h4>
+                     <p>{PROPERTY_DESCRIPTION}<br><a href="{MOREINFORMATIONLINK}" class=" visible-xs btn btn-success btn-block btn-xs"><i class="icon-white icon-calendar"></i> Book now</a></p>
+			</div>
+<div class="hidden-xs col-sm-4 col-md-2 col-lg-2">
+<p><a href="{MOREINFORMATIONLINK}" class="btn btn-success pull-right"><i class="icon-white icon-calendar"></i> Book now</a></p>
+</div>
+</div>
+                            
+			</div>
+
+		</div>
+		</patTemplate:tmpl>
+	</div>
+	<!-- Carousel nav -->
+	<a class="carousel-control left" href="#featured_listings_slider_1" data-slide="prev"><i class="icon-chevron-left"></i></a>
+	<a class="carousel-control right" href="#featured_listings_slider_1" data-slide="next"><i class="icon-chevron-right"></i></a>
+</div>
+</patTemplate:tmpl>

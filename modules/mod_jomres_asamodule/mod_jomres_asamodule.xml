@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension
+	type="module"
+	version="1.7.0"
+	client="site"
+	method="upgrade">
+	<name>Jomres AsAModule</name>
+	<author>Vince Wooll</author>
+	<creationDate>February 2011</creationDate>
+	<copyright>(C) 2011 Vince Wooll</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<authorEmail>support@jomres.net</authorEmail>
+	<authorUrl>http://www.jomres.net</authorUrl>
+	<version>4</version>
+	<description>Allows you to set a specific task as a module that can be included anywhere on the site. Minicomponents have a pattern jnnnnnxxxxx.class.php. Some of these have the pattern 06000, for example like j06000popular_properties.class.php (see the popular properties plugin). This functionality can be called via a url like http://www.domain.com/index.php?option=com_jomres&amp;task=popular_properties, however it is more appropriate to include that popular properties page in a module, and this module allows you to do that. To put the popular properties plugin in a module, set the 'task' parameter opposite to 'popular_properties' and configure your position as you would any other module.</description>
+	<files>
+		<filename module="mod_jomres_asamodule">mod_jomres_asamodule.php</filename>
+		<filename module="mod_jomres_asamodule">jomres_asamodule.xml</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="moduleclass_sfx" type="text" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field name="jomres_task" type="text" default="" label="Task"  description="The Jomres task to be called." />
+				<field name="arguments" type="text" default="" size="75" label="Optional arguments"   description="Optional arguments, for example for 'remoteavailability' you would set this to '&amp;id=1' assuming that your property uid is 1"/>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
