@@ -3790,6 +3790,9 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 	$booking_data = doSelectSql( $query );
 
 	$output                      = array ();
+    $task = "listLiveBookings";
+
+    $task = $_GET['task'];;
 	$output[ 'PAGETITLE' ]       = $title;
 	$output[ 'IMG_PENDING' ]     = $img_pending;
 	$output[ 'IMG_ARRIVETODAY' ] = $img_arrivetoday;
@@ -3809,6 +3812,7 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 	$output[ '_JOMRES_COM_MR_VIEWBOOKINGS_SURNAME' ] = jr_gettext( '_JOMRES_COM_MR_VIEWBOOKINGS_SURNAME', _JOMRES_COM_MR_VIEWBOOKINGS_SURNAME );
 	$output[ '_JOMRES_COM_MR_EDITBOOKINGTITLE' ]     = jr_gettext( '_JOMRES_COM_MR_EDITBOOKINGTITLE', _JOMRES_COM_MR_EDITBOOKINGTITLE );
 	$output[ '_JOMRES_BOOKING_NUMBER' ]              = jr_gettext( '_JOMRES_BOOKING_NUMBER', _JOMRES_BOOKING_NUMBER, true, false );
+	$output[ 'INVOICE_NUMBER' ]              = "Invoice No.";
 	if ( $mrConfig[ 'wholeday_booking' ] == "1" )
 		{
 		$output[ 'ARRIVAL' ]   = jr_gettext( '_JOMRES_COM_MR_VIEWBOOKINGS_ARRIVAL_WHOLEDAY', _JOMRES_COM_MR_VIEWBOOKINGS_ARRIVAL_WHOLEDAY );
@@ -3821,6 +3825,9 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 		else
 		$output[ 'DEPARTURE' ] = "&nbsp;";
 		}
+
+    $output[ 'CANCEL' ] = "Cancelled Date";
+    $output[ 'CANCELLED_REASON' ] = "Reason";
 
     $rows = array ();
 //    print_r($contractsList); die();
@@ -3855,7 +3862,17 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 		$r[ 'SURNAME' ]   = $row->surname;
 
 		$r[ 'BOOKING_NO' ]  = $row->tag;
+		$r[ 'INVOICE_NO' ]  = $row->invoice_uid;
 		$r[ 'ARRIVALDATE' ] = outputDate( $row->arrival );
+		$r[ 'CANCELDATE' ] = outputDate( $row->cancelled_timestamp );
+		$r[ 'CANCELLED_REASON_TEXT' ] = $row->cancelled_reason;
+
+        $cancelledTimestamp = strtotime($row->cancelled_timestamp);
+        $cancelledDate = date("Y/m/d", $cancelledTimestamp);
+
+        $cancelledInterval = dateDiffBlacBooking("d",$cancelledDate,$row->arrival);
+        $r[ 'CANCELLED_INTERVAL' ] = $cancelledInterval;
+
 		if ( $mrConfig[ 'showdepartureinput' ] == "1" ) $r[ 'DEPARTURE' ] = outputDate( $row->departure );
 		else
             $r[ 'DEPARTURE' ] = "&nbsp;";
@@ -3873,6 +3890,13 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 
         $r['EMAIL']= $row->email;
         $r['CAR_REG']= $row->tel_mobile;
+
+        $query     = "SELECT note FROM #__jomcomp_notes WHERE contract_uid = '" . $row->contract_uid . "' AND note LIKE '%Custom%'";
+        $notesData = doSelectSql( $query );
+
+        foreach($notesData as $data) {
+            $r['ACTCODE'] = str_replace("Custom ","",$data->note);
+        }
 
         $contract_id = $row->contract_uid;
         $lineitems = invoices_getalllineitems_forinvoice( $contract_id );
@@ -3950,7 +3974,12 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 
 	$tmpl = new patTemplate();
 	$tmpl->setRoot( JOMRES_TEMPLATEPATH_BACKEND );
-	$tmpl->readTemplatesFromInput( 'list_property_bookings.html' );
+    if($task == "listoldbookings"){
+        $tmpl->readTemplatesFromInput( 'list_property_bookings_cancelled.html' );
+    }
+    else{
+        $tmpl->readTemplatesFromInput( 'list_property_bookings.html' );
+    }
 	$tmpl->addRows( 'pageoutput', $pageoutput );
 	$tmpl->addRows( 'rows', $rows );
 	$tmpl->displayParsedTemplate();
