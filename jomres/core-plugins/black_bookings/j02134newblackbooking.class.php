@@ -95,6 +95,7 @@ class j02134newblackbooking {
 					$row=array();
 					$checked="";
 					$dateRangeArray= $this->bb_getDateRange($start,$end);
+
 					$contractUidArray=array();
 					foreach ($dateRangeArray as $theDate)
 						{
@@ -108,6 +109,7 @@ class j02134newblackbooking {
 								}
 							}
 						}
+
 					$contractUidArray=array_unique($contractUidArray);
 					$text=jr_gettext('_JOMRES_COM_MR_EB_ROOM_NUMBER',_JOMRES_COM_MR_EB_ROOM_NUMBER).' '.$room->room_number." ".$room->room_name;
 					
@@ -229,7 +231,7 @@ class j02134newblackbooking {
 
 	function bb_getDateRange($start,$end)
 		{
-		$interval=dateDiff("d",$start,$end);
+		$interval=dateDiffBlacBooking("d",$start,$end);
 		$dateRangeArray=array();
 		$date_elements  = explode("/",$start);
 		$unixCurrentDate= mktime(0,0,0,$date_elements[1],$date_elements[2],$date_elements[0]);
