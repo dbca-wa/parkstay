@@ -72,7 +72,8 @@ class j02160cancelbooking
 
 				$output[ 'ARRIVAL' ]       = outputDate( $arrival );
 				$output[ 'CONTRACTTOTAL' ] = output_price( $contract_total );
-				$output[ 'DAYSTOARRIVAL' ] = dateDiff( "d", $today, $arrival );
+
+				$output[ 'DAYSTOARRIVAL' ] = dateDiffBlacBooking( "d", $today, $arrival );
 
 				if ( $deposit_paid == "1" )
 					{
