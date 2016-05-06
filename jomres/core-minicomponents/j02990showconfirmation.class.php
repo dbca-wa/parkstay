@@ -176,6 +176,16 @@ class j02990showconfirmation
 				}
 			}
 
+        $siteType = "";
+        if(isset($bookingDeets[ 'property_uid' ]) && $bookingDeets[ 'property_uid' ] != "") {
+            $query = "SELECT property_booking_configuration FROM #__jomres_propertys WHERE propertys_uid = '" . $bookingDeets['property_uid'] . "' LIMIT 1";
+            $propertyData = doSelectSql($query);
+
+            foreach ($propertyData as $propertyConfig) {
+                $siteType = $propertyConfig->property_booking_configuration;
+            }
+        }
+
 		$requestedrooms              = $bookingDeets[ 'requestedRoom' ];
 		$rooms                       = explode( ",", $requestedrooms );
 		$booking_parts[ 'NUMROOMS' ] = count( $rooms );
@@ -288,13 +298,15 @@ else
 		$roomtype[ 'FULLDESC' ] = "Total site booked: ". $roomadd  . $fulldesc;
 //  Nitin modified for Purunulu and walardi - kununarra
 
-if ( $booking_parts[ 'PROPERTY' ] == 54 || $booking_parts[ 'PROPERTY' ] == 56 )
-		$roomtype[ 'ROOMNUMBER' ] = "<br /><strong>Site number:</strong> Allocated on arrival " ; //. "<br /> <strong>Site type:</strong>" . $feature;
-else
-	if (! empty($feature))		
-		$roomtype[ 'ROOMNUMBER' ] = "<br /><strong>Site number:</strong>" . $roomNumber ; //. "<br /> <strong>Site type:</strong>" . $feature;
-	else 
-		$roomtype[ 'ROOMNUMBER' ] = "<br /><strong>Site number:</strong>" . $roomNumber;
+        if(isset($siteType) && $siteType == 'site_type'){
+            $roomtype[ 'ROOMNUMBER' ] = "<br /><strong>Site number:</strong> Allocated on arrival/Choose from sites unoccupied on arrival";
+        }
+        else {
+            if (!empty($feature))
+                $roomtype['ROOMNUMBER'] = "<br /><strong>Site number:</strong>" . $roomNumber; //. "<br /> <strong>Site type:</strong>" . $feature;
+            else
+                $roomtype['ROOMNUMBER'] = "<br /><strong>Site number:</strong>" . $roomNumber;
+        }
 
 // end
 
