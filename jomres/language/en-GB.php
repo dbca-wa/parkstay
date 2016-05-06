@@ -843,7 +843,7 @@ jr_define( 'JOMRES_COM_A_VERBOSETARIFFINTO_DESC', 'Set this to Yes to show more 
 jr_define( 'JOMRES_COM_A_MINIMALCONFIG', 'Minimise configuration options' );
 jr_define( '_JOMCOMP_AMEND', 'Amend Booking - Business Selection' );
 jr_define( '_JOMCOMP_AMEND_SELECTPROPERTY', 'Select New Business' );
-jr_define( '_JOMCOMP_AMEND_HEADER', 'Original Contract:' );
+jr_define( '_JOMCOMP_AMEND_HEADER', 'Current Details:' );
 jr_define( '_JOMCOMP_AMEND_DEPOSITPAID', 'Deposit Paid' );
 jr_define( '_JOMCOMP_AMEND_DEPOSITDUE', 'Deposit Not Paid' );
 jr_define( '_JOMCOMP_AMEND_OVERRIDE_TOTAL', 'Override Total' );
