@@ -1058,14 +1058,28 @@ function get_property_module_data( $property_uid_array, $alt_template_path = '',
 
 function set_booking_number()
 	{
-	$tmpBookingHandler = jomres_singleton_abstract::getInstance( 'jomres_temp_booking_handler' );
-	$keeplooking       = true;
-	while ( $keeplooking ):
-		$query  = "SELECT contract_uid FROM #__jomres_contracts WHERE tag like '" . $cartnumber . "' LIMIT 1";
-		$bklist = doSelectSql( $query );
-		if ( count( $bklist ) == 0 ) $keeplooking = false;
-		$cartnumber = mt_rand( 10000000, 99999999 );
-	endwhile;
+    $cartnumber = "";
+    $tmpBookingHandler = jomres_singleton_abstract::getInstance( 'jomres_temp_booking_handler' );
+    $contract_uid = $tmpBookingHandler->tmpbooking['amend_contractuid'];
+
+    $query  = "SELECT tag FROM #__jomres_contracts WHERE contract_uid like '" . $contract_uid . "' LIMIT 1";
+    $existingNumber = doSelectSql( $query );
+
+    foreach($existingNumber as $number) {
+        if($number->tag != "") {
+            $cartnumber = $number->tag;
+        }
+    }
+
+    if($cartnumber == "") {
+        $keeplooking = true;
+        while ($keeplooking):
+            $query = "SELECT contract_uid FROM #__jomres_contracts WHERE tag like '" . $cartnumber . "' LIMIT 1";
+            $bklist = doSelectSql($query);
+            if (count($bklist) == 0) $keeplooking = false;
+            $cartnumber = mt_rand(10000000, 99999999);
+        endwhile;
+    }
 	$tmpBookingHandler->tmpbooking[ "booking_number" ] = $cartnumber;
 
 	return $cartnumber;
@@ -3308,6 +3322,8 @@ function insertInternetBooking( $jomressession = "", $depositPaid = false, $conf
 				$MiniComponents->triggerEvent( '03030', $componentArgs ); // Booking completed message
 				if ( $userIsManager )
 					{
+                    $MiniComponents->triggerEvent( '03100', $componentArgs ); // Generate hotel confirmation email
+                    $MiniComponents->triggerEvent( '03110', $componentArgs ); // Generate guest confirmation email
 					echo jr_gettext( '_JOMRES_COM_MR_BOOKINGSAVEDMESSAGE', _JOMRES_COM_MR_BOOKINGSAVEDMESSAGE ) . "<br />";
 					//echo "<a href=\"".jomresURL(JOMRES_SITEPAGE_URL."&task=editDeposit&contractUid=$contract_uid")."\">".jr_gettext('_JOMRES_COM_MR_EB_PAYM_DEPOSIT_PAID_UPDATE',_JOMRES_COM_MR_EB_PAYM_DEPOSIT_PAID_UPDATE)."</a>";
 					$jrtbar = jomres_singleton_abstract::getInstance( 'jomres_toolbar' );
