@@ -295,7 +295,7 @@ class j00101amendBooking
                 $output[ 'HROOM' ] = jr_gettext( '_JOMRES_FRONT_MR_EMAIL_TEXT_ROOM', _JOMRES_FRONT_MR_EMAIL_TEXT_ROOM, false, false );
 
                 if(isset($siteType) && $siteType == 'site_type'){
-                    $output[ 'ROOM' ] = " ";
+                    $output[ 'ROOM' ] = $roomNumber . " " . $room_name;
                 }
                 elseif(isset($siteType) && $siteType == 'numbered_site'){
                     $output[ 'ROOM' ]  = $roomNumber . " " . $room_name;
