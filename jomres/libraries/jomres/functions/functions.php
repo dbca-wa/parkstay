@@ -1058,14 +1058,28 @@ function get_property_module_data( $property_uid_array, $alt_template_path = '',
 
 function set_booking_number()
 	{
-	$tmpBookingHandler = jomres_singleton_abstract::getInstance( 'jomres_temp_booking_handler' );
-	$keeplooking       = true;
-	while ( $keeplooking ):
-		$query  = "SELECT contract_uid FROM #__jomres_contracts WHERE tag like '" . $cartnumber . "' LIMIT 1";
-		$bklist = doSelectSql( $query );
-		if ( count( $bklist ) == 0 ) $keeplooking = false;
-		$cartnumber = mt_rand( 10000000, 99999999 );
-	endwhile;
+    $cartnumber = "";
+    $tmpBookingHandler = jomres_singleton_abstract::getInstance( 'jomres_temp_booking_handler' );
+    $contract_uid = $tmpBookingHandler->tmpbooking['amend_contractuid'];
+
+    $query  = "SELECT tag FROM #__jomres_contracts WHERE contract_uid like '" . $contract_uid . "' LIMIT 1";
+    $existingNumber = doSelectSql( $query );
+
+    foreach($existingNumber as $number) {
+        if($number->tag != "") {
+            $cartnumber = $number->tag;
+        }
+    }
+
+    if($cartnumber == "") {
+        $keeplooking = true;
+        while ($keeplooking):
+            $query = "SELECT contract_uid FROM #__jomres_contracts WHERE tag like '" . $cartnumber . "' LIMIT 1";
+            $bklist = doSelectSql($query);
+            if (count($bklist) == 0) $keeplooking = false;
+            $cartnumber = mt_rand(10000000, 99999999);
+        endwhile;
+    }
 	$tmpBookingHandler->tmpbooking[ "booking_number" ] = $cartnumber;
 
 	return $cartnumber;
@@ -3308,6 +3322,8 @@ function insertInternetBooking( $jomressession = "", $depositPaid = false, $conf
 				$MiniComponents->triggerEvent( '03030', $componentArgs ); // Booking completed message
 				if ( $userIsManager )
 					{
+                    $MiniComponents->triggerEvent( '03100', $componentArgs ); // Generate hotel confirmation email
+                    $MiniComponents->triggerEvent( '03110', $componentArgs ); // Generate guest confirmation email
 					echo jr_gettext( '_JOMRES_COM_MR_BOOKINGSAVEDMESSAGE', _JOMRES_COM_MR_BOOKINGSAVEDMESSAGE ) . "<br />";
 					//echo "<a href=\"".jomresURL(JOMRES_SITEPAGE_URL."&task=editDeposit&contractUid=$contract_uid")."\">".jr_gettext('_JOMRES_COM_MR_EB_PAYM_DEPOSIT_PAID_UPDATE',_JOMRES_COM_MR_EB_PAYM_DEPOSIT_PAID_UPDATE)."</a>";
 					$jrtbar = jomres_singleton_abstract::getInstance( 'jomres_toolbar' );
@@ -3790,6 +3806,9 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 	$booking_data = doSelectSql( $query );
 
 	$output                      = array ();
+    $task = "listLiveBookings";
+
+    $task = $_GET['task'];;
 	$output[ 'PAGETITLE' ]       = $title;
 	$output[ 'IMG_PENDING' ]     = $img_pending;
 	$output[ 'IMG_ARRIVETODAY' ] = $img_arrivetoday;
@@ -3809,6 +3828,7 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 	$output[ '_JOMRES_COM_MR_VIEWBOOKINGS_SURNAME' ] = jr_gettext( '_JOMRES_COM_MR_VIEWBOOKINGS_SURNAME', _JOMRES_COM_MR_VIEWBOOKINGS_SURNAME );
 	$output[ '_JOMRES_COM_MR_EDITBOOKINGTITLE' ]     = jr_gettext( '_JOMRES_COM_MR_EDITBOOKINGTITLE', _JOMRES_COM_MR_EDITBOOKINGTITLE );
 	$output[ '_JOMRES_BOOKING_NUMBER' ]              = jr_gettext( '_JOMRES_BOOKING_NUMBER', _JOMRES_BOOKING_NUMBER, true, false );
+	$output[ 'INVOICE_NUMBER' ]              = "Invoice No.";
 	if ( $mrConfig[ 'wholeday_booking' ] == "1" )
 		{
 		$output[ 'ARRIVAL' ]   = jr_gettext( '_JOMRES_COM_MR_VIEWBOOKINGS_ARRIVAL_WHOLEDAY', _JOMRES_COM_MR_VIEWBOOKINGS_ARRIVAL_WHOLEDAY );
@@ -3821,6 +3841,9 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 		else
 		$output[ 'DEPARTURE' ] = "&nbsp;";
 		}
+
+    $output[ 'CANCEL' ] = "Cancelled Date";
+    $output[ 'CANCELLED_REASON' ] = "Reason";
 
     $rows = array ();
 //    print_r($contractsList); die();
@@ -3855,7 +3878,17 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 		$r[ 'SURNAME' ]   = $row->surname;
 
 		$r[ 'BOOKING_NO' ]  = $row->tag;
+		$r[ 'INVOICE_NO' ]  = $row->invoice_uid;
 		$r[ 'ARRIVALDATE' ] = outputDate( $row->arrival );
+		$r[ 'CANCELDATE' ] = outputDate( $row->cancelled_timestamp );
+		$r[ 'CANCELLED_REASON_TEXT' ] = $row->cancelled_reason;
+
+        $cancelledTimestamp = strtotime($row->cancelled_timestamp);
+        $cancelledDate = date("Y/m/d", $cancelledTimestamp);
+
+        $cancelledInterval = dateDiffBlacBooking("d",$cancelledDate,$row->arrival);
+        $r[ 'CANCELLED_INTERVAL' ] = $cancelledInterval;
+
 		if ( $mrConfig[ 'showdepartureinput' ] == "1" ) $r[ 'DEPARTURE' ] = outputDate( $row->departure );
 		else
             $r[ 'DEPARTURE' ] = "&nbsp;";
@@ -3873,6 +3906,13 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 
         $r['EMAIL']= $row->email;
         $r['CAR_REG']= $row->tel_mobile;
+
+        $query     = "SELECT note FROM #__jomcomp_notes WHERE contract_uid = '" . $row->contract_uid . "' AND note LIKE '%Custom%'";
+        $notesData = doSelectSql( $query );
+
+        foreach($notesData as $data) {
+            $r['ACTCODE'] = str_replace("Custom ","",$data->note);
+        }
 
         $contract_id = $row->contract_uid;
         $lineitems = invoices_getalllineitems_forinvoice( $contract_id );
@@ -3950,7 +3990,12 @@ function showLiveBookings( $contractsList, $title, $arrivaldateDropdown )
 
 	$tmpl = new patTemplate();
 	$tmpl->setRoot( JOMRES_TEMPLATEPATH_BACKEND );
-	$tmpl->readTemplatesFromInput( 'list_property_bookings.html' );
+    if($task == "listoldbookings"){
+        $tmpl->readTemplatesFromInput( 'list_property_bookings_cancelled.html' );
+    }
+    else{
+        $tmpl->readTemplatesFromInput( 'list_property_bookings.html' );
+    }
 	$tmpl->addRows( 'pageoutput', $pageoutput );
 	$tmpl->addRows( 'rows', $rows );
 	$tmpl->displayParsedTemplate();

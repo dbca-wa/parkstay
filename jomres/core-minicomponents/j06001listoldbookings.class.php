@@ -46,14 +46,14 @@ class j06001listoldbookings
 		$defaultProperty = getDefaultProperty();
 		if ( isset( $arrivalDates ) && !empty( $arrivalDates ) )
 			{
-			$query = "SELECT c.contract_uid,c.tag, c.arrival, c.departure,c.booked_in,c.cancelled,c.bookedout, g.guests_uid, g.firstname, g.surname, g.contracts_contract_uid, g.mos_userid
+			$query = "SELECT c.contract_uid,c.invoice_uid,c.tag, c.arrival, c.departure,c.booked_in,c.cancelled,c.cancelled_timestamp,c.cancelled_reason,c.bookedout, g.guests_uid, g.firstname, g.surname, g.contracts_contract_uid, g.mos_userid
 			FROM #__jomres_contracts c, #__jomres_guests g
 			WHERE (c.guest_uid = g.guests_uid)  AND c.property_uid = '" . (int) $defaultProperty . "' AND c.arrival = '$arrivalDates' AND (c.cancelled = 1 OR c.bookedout = 1)
 			ORDER BY c.arrival";
 			}
 		else
 			{
-			$query = "SELECT c.contract_uid,c.tag, c.arrival, c.departure,c.booked_in,c.cancelled,c.bookedout, g.guests_uid, g.firstname, g.surname, g.contracts_contract_uid, g.mos_userid
+			$query = "SELECT c.contract_uid,c.invoice_uid,c.tag, c.arrival, c.departure,c.booked_in,c.cancelled,c.cancelled_timestamp,c.cancelled_reason,c.bookedout, g.guests_uid, g.firstname, g.surname, g.contracts_contract_uid, g.mos_userid
 			FROM #__jomres_contracts c, #__jomres_guests g
 			WHERE (c.guest_uid = g.guests_uid) AND c.property_uid = '" . (int) $defaultProperty . "' AND (c.cancelled = 1 OR c.bookedout = 1)
 			ORDER BY c.arrival";

@@ -53,6 +53,43 @@ class j00101amendBooking
 
 				$query    = "SELECT * FROM #__jomres_contracts WHERE contract_uid = '" . (int) $contract_uid . "' LIMIT 1";
 				$contract = doSelectSql( $query );
+
+                $rooms         = explode( ",", $contract[0]->rooms_tariffs );
+                foreach ( $rooms as $r )
+                {
+                    $rm       = explode( "^", $r );
+                    $rmids[ ] = $rm[ 0 ];
+                }
+                $gor      = genericOr( $rmids, 'room_uid' );
+                $query    = "SELECT propertys_uid,room_number,room_name,room_features_uid FROM #__jomres_rooms WHERE $gor ";
+                $roomList = doSelectSql( $query );
+                $feature = "";
+                $roomNumber = "";
+                $room_name  = "";
+                $room_class  = "";
+                $siteType  = "";
+
+                $query      = "SELECT room_features_uid,feature_description FROM #__jomres_room_features";
+                $featureList   = doSelectSql( $query );
+                foreach ( $featureList as $featurel )
+                {
+                    $featurearr[$featurel->room_features_uid] = $featurel->feature_description;
+                }
+
+                foreach ( $roomList as $room )
+                {
+                    if($room->room_features_uid > 0)
+                        if ($feature == "")
+                            $feature = $featurearr[$room->room_features_uid] ;
+                        else
+                            $feature .= ","  . $featurearr[$room->room_features_uid] ;
+
+                        $property = $room->propertys_uid;
+                        $roomNumber .= $room->room_number . ", ";
+                        $room_name .= $room->room_name;
+                        $room_class .= $room->room_classes_uid;
+                }
+
 				foreach ( $contract as $c )
 					{
 					$tmpBookingHandler->updateBookingField( "amend_deposit_required", $c->deposit_required );
@@ -187,6 +224,13 @@ class j00101amendBooking
 						$tmpBookingHandler->tmpbooking[ "mininterval" ]              = "";
 						$tmpBookingHandler->saveBookingData();
 						}
+
+                        $query         = "SELECT property_name, property_description, property_tel,property_email, property_airports, property_othertransport, property_checkin_times, property_booking_configuration FROM #__jomres_propertys WHERE propertys_uid = '" . (int) $c->property_uid . "' LIMIT 1";
+                        $propertyResult = doSelectSql( $query );
+                        foreach ( $propertyResult as $propertyData )
+                        {
+                            $siteType = $propertyData->property_booking_configuration;
+                        }
 					}
 
 				$currfmt                = jomres_singleton_abstract::getInstance( 'jomres_currency_format' );
@@ -234,12 +278,39 @@ class j00101amendBooking
 					$output[ 'DEPOSIT' ] = output_price( $tmpBookingHandler->tmpbooking[ "amend_deposit_required" ] );
 					}
 
+                $guestDetails = getGuestDetailsForContract( $c->contract_uid );
+                $rows         = array ();
+                if ( count( $guestDetails ) > 0 )
+                {
+                    $output[ 'HNUMBEROFGUESTS' ] = jr_gettext( '_JOMRES_COM_MR_QUICKRES_STEP4_NUMBEROFGUESTS', _JOMRES_COM_MR_QUICKRES_STEP4_NUMBEROFGUESTS, false, false );
+                    foreach ( $guestDetails as $g )
+                    {
+                        $r               = array ();
+                        $r[ 'TITLE' ]    = $g[ 'title' ];
+                        $r[ 'QUANTITY' ] = $g[ 'qty' ];
+                        $rows[ ]         = $r;
+                    }
+                }
+
+                $output[ 'HROOM' ] = jr_gettext( '_JOMRES_FRONT_MR_EMAIL_TEXT_ROOM', _JOMRES_FRONT_MR_EMAIL_TEXT_ROOM, false, false );
+
+                if(isset($siteType) && $siteType == 'site_type'){
+                    $output[ 'ROOM' ] = $roomNumber . " " . $room_name;
+                }
+                elseif(isset($siteType) && $siteType == 'numbered_site'){
+                    $output[ 'ROOM' ]  = $roomNumber . " " . $room_name;
+                }
+                else{
+                    $output[ 'ROOM' ]  = $roomNumber . " " . $room_name;
+                }
+
 				$pageoutput[ ] = $output;
 				$tmpl          = new patTemplate();
 
 				$tmpl->setRoot( JOMRES_TEMPLATEPATH_BACKEND );
 				$tmpl->readTemplatesFromInput( 'original_details.html' );
 				$tmpl->addRows( 'pageoutput', $pageoutput );
+                $tmpl->addRows( 'rows', $rows );
 				$tmpl->displayParsedTemplate();
 				}
 			}

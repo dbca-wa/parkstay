@@ -52,15 +52,25 @@ class j02162savecancellation
 			$jomres_messaging->set_message( $saveMessage );
 			$forfeit_retained = "0";
 			if ( $mrConfig[ 'cancellationPolicyReserveDeposits' ] == "1" ) $forfeit_retained = "1";
-			$query        = "SELECT guest_uid,tag FROM #__jomres_contracts WHERE contract_uid = '" . (int) $contract_uid . "' AND property_uid = '" . (int) $defaultProperty . "'";
+			$query        = "SELECT guest_uid,tag,arrival,departure FROM #__jomres_contracts WHERE contract_uid = '" . (int) $contract_uid . "' AND property_uid = '" . (int) $defaultProperty . "'";
 			$contractData = doSelectSql( $query );
 			foreach ( $contractData as $cancellation )
 				{
 				$guest_uid = $cancellation->guest_uid;
 				$tag       = $cancellation->tag;
+				$arrival       = strtotime($cancellation->arrival);
+				$departure       = strtotime($cancellation->departure);
 				}
 
-			$dateToDrop = $dateRangeArray[ $i ];
+            $current_property_details = jomres_singleton_abstract::getInstance( 'basic_property_details' );
+            $current_property_details->gather_data( $defaultProperty );
+
+            $saveMessage = "Cancelled: your booking for ".$current_property_details->property_name.", ".$current_property_details->property_town.", (Number: ".$tag.")";
+
+            $arrival = date("d/m/Y", $arrival);
+            $departure = date("d/m/Y", $departure);
+
+            $dateToDrop = $dateRangeArray[ $i ];
 			$query      = "DELETE FROM #__jomres_room_bookings WHERE contract_uid = '" . (int) $contract_uid . "' AND property_uid = '" . (int) $defaultProperty . "'";
 			if ( !doInsertSql( $query, "" ) ) trigger_error( "Unable to delete from room bookings table, mysql db failure", E_USER_ERROR );
 
@@ -69,14 +79,13 @@ class j02162savecancellation
 
 			$query     = "SELECT email,firstname,surname FROM #__jomres_guests WHERE guests_uid = " . $guest_uid . " LIMIT 1";
 			$guestData = doSelectSql( $query, 2 );
-			$text      = $tag . ' - ' . $saveMessage;
 
-			$current_property_details = jomres_singleton_abstract::getInstance( 'basic_property_details' );
-			$current_property_details->gather_data( $defaultProperty );
+			//$text      = $tag . ' - ' . $saveMessage;
+            $text = "Hello ".$guestData['firstname']." ".$guestData['surname'].". Your booking ".$tag." for ".$arrival." to ".$departure." for ".$current_property_details->property_name.", ".$current_property_details->property_town." has been cancelled. Any applicable refund will be made consistent with the terms and conditions of booking.";
 
-			if ( $guestData[ 'email' ] != '' )
-				{
-				if ( !jomresMailer( $guestData[ 'email' ], $current_property_details->property_name . ' - ' . $current_property_details->property_town, $current_property_details->property_email, $saveMessage, $text, $mode = 1 ) ) error_logging( 'Failure in sending cancellation email to hotel. Target address: ' . $hotelemail . ' Subject' . $subject );
+            if ( $guestData[ 'email' ] != '' )
+			    {
+				if ( !jomresMailer( $guestData[ 'email' ], $current_property_details->property_name . ' - ' . $current_property_details->property_town, "".$current_property_details->property_email.",campgrounds@dpaw.wa.gov.au", $saveMessage, $text, $mode = 1 ) ) error_logging( 'Failure in sending cancellation email to hotel. Target address: ' . $hotelemail . ' Subject' . $subject );
 				}
 			if ( !jomresMailer( $current_property_details->property_email, $current_property_details->property_name . ' - ' . $current_property_details->property_town, $guestData[ 'email' ], $saveMessage, $text, $mode = 1 ) ) error_logging( 'Failure in sending cancellation email to guest. Target address: ' . $hotelemail . ' Subject' . $subject );
 
