@@ -38,7 +38,7 @@ class JConfig {
 	public $smtpauth = '0';
 	public $smtpuser = '';
 	public $smtppass = '';
-	public $smtphost = 'smtp';
+	public $smtphost = 'smtp.corporateict.domain';
 	public $smtpsecure = 'none';
 	public $smtpport = '25';
 	public $caching = '0';
