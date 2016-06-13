@@ -6,7 +6,7 @@ class JConfig {
 	public $offline_message = 'This website is currently unavailable due to scheduled maintenance and will be available 10 am AWST today.';
 	public $display_offline_message = '1';
 	public $offline_image = '';
-	public $sitename = 'Park Stay';
+	public $sitename = 'Park Stays';
 	public $editor = 'jce';
 	public $captcha = '0';
 	public $list_limit = '20';
