@@ -525,7 +525,7 @@ figure {
     .lanepoole {
         min-height: 100px;
     }
-
+	
 .masthead {min-height: 90px;padding: 5px 0 0 0;}
 .nav-collapse .nav> li >a, .nav-collapse .dropdown-menu a {padding: 9px 15px;font-weight: normal;color: #777777;-webkit-border-radius: 30px;-moz-border-radius: 0px;border-radius: 0px;}
 #mainnav .nav > li > a, #mainnav ul li li a {
@@ -863,6 +863,10 @@ a.pagetop {float:none;}
     .othercampgrounds {
         min-height: 100px !important;
     }
+	
+	.yanchep {
+		min-height: 100px !important;
+	}
 }
 
 
@@ -1438,6 +1442,19 @@ img {max-width: 500px;page-break-inside: avoid;}
     min-height: 204px;
 }
 
+.yanchep {
+    background: url(/images/site/yanchep.jpg) no-repeat;
+    background-size: 100% auto;
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    -o-background-size: 100% auto;
+    padding: 10px;
+    margin: 0 10px 10px 10px;
+    border: 2px solid #fff;
+    border-radius: 4px;
+    min-height: 204px;
+}
+
 .campfirespermitted {
     background: url(/images/site/campfires.jpg) no-repeat;
     background-size: 100% auto;
@@ -1515,6 +1532,13 @@ img {max-width: 500px;page-break-inside: avoid;}
 }
 
 .region-module.lanepoole > h3 {
+    color: white;
+    font-size: 22px;
+    text-decoration: none;
+    text-shadow: 1px 1px #333;
+}
+
+.region-module.yanchep > h3 {
     color: white;
     font-size: 22px;
     text-decoration: none;
