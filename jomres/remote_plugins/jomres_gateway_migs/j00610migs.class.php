@@ -59,20 +59,22 @@ class j00610migs
 		$hash = $_REQUEST['vpc_SecureHash'];
 		unset($_REQUEST['vpc_SecureHash']);
 //echo $settingArray['secure'];
-		$md5HashData = $settingArray['secure'];
+		$hashSecret = $settingArray['secure'];
 		foreach ($_POST as $key => $value) {
 			if (($key != "vpc_SecureHash" || strlen($value) > 0) && (strpos($key, 'vpc_') !== false || $key == 'Title')) {
-				if ($key != "vpc_SecureHash") {
+				if (in_array($key, array("vpc_SecureHash", "vpc_SecureHashType")) == 0) {
 					// echo $key."=".$value."<br />";
-					$md5HashData .= $value;
+					$hashData .= $key . "=" . $value . "&";
 				}
 			}
 		}
-		/* echo "hash=".$hash;echo "<br />";
-		  echo "StrHash=".strtoupper(md5($md5HashData));echo "<br />";
-		  echo $md5HashData;
-		  die(); */
-		if ($_REQUEST['vpc_AcqResponseCode'] == "00" && $hash == strtoupper(md5($md5HashData))) {
+        $hashData = rtrim($hashData, "&");
+
+		  echo "hash=".$hash;echo "<br />";
+		  echo "StrHash=".strtoupper(hash_hmac('SHA256', $hashData, pack('H*', $hashSecret)));echo "<br />";
+		  echo $hashData;
+		  die();
+		if ($_REQUEST['vpc_AcqResponseCode'] == "00" && $hash == strtoupper(hash_hmac('SHA256', $hashData, pack('H*', $hashSecret)))) {
 			gateway_log("Payment passed for " . $jomressession);
 			echo "<h3>" . jr_gettext('_JOMRES_COM_A_MIGS_SUCCESSFUL' . $plugin, 'Booking successful') . ".</h3>";
 			$beforebook = date("Y-m-d H:i");

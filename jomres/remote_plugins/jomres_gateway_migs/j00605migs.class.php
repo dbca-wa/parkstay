@@ -70,33 +70,36 @@ class j00605migs
 		//print_r($total);die();
 		$amount = $total;
 		$oid = time();
-		$md5HashData = $settingArray['secure'];
 //	$returl=JURI::base()."index.php?option=com_jomres&page=completebk&jsid=$jomressession&plugin=$plugin";
 		$returl = JURI::base() . "jomres/remote_plugins/jomres_gateway_migs/notify.php";
 		$params = array("Title" => "PHP VPC 3-Party", "vpc_Version" => "1", "vpc_Command" => "pay", "vpc_AccessCode" => $settingArray['accesscode'], "vpc_MerchTxnRef" => $fax, "vpc_Merchant" => $settingArray['merchantid'], "vpc_OrderInfo" => $oid, "vpc_Amount" => $total, "vpc_Locale" => $settingArray['locale'], "vpc_ReturnURL" => $returl, "vpc_TicketNo" => $oid);
-		$md5HashData = $settingArray['secure'];
+        $hashSecret = $settingArray['secure'];
 		ksort($params);
 
 		$appendAmp = 0;
 		$vpcURL = $settingArray['returl'] . "?";
+        $hashString = "";
 		foreach ($params as $key => $value) {
 
 			if (strlen($value) > 0) {
 
 				if ($appendAmp == 0) {
 					$vpcURL .= urlencode($key) . '=' . urlencode($value);
+                    $hashString .= $key . '=' . $value;
 					$appendAmp = 1;
 				} else {
 					$vpcURL .= '&' . urlencode($key) . "=" . urlencode($value);
+                    $hashString .= '&' . $key . '=' . $value;
 				}
-				$md5HashData .= $value;
 			}
 		}
+        $hashString = ltrim($hashString, '&');
 		if (strlen(SECURE) > 0) {
-			$vpcURL .= "&vpc_SecureHash=" . strtoupper(md5($md5HashData));
+			$vpcURL .= "&vpc_SecureHash=" . strtoupper(hash_hmac('SHA256', $hashString, pack('H*', $hashSecret)));
+            $vpcURL .= "&vpc_SecureHashType=" . "SHA256";
 		}
 		//$vpcURL.="&SessionVariable1=1234";
-		//echo $vpcURL;die();
+		echo "ab" . $vpcURL;echo "<br \><br \>";echo '"' . $hashString . '"';die();
 		header("Location: " . $vpcURL);
 // stop sending	payment
 	}
