@@ -22,6 +22,8 @@ else
 global $eLiveSite, $jomresConfig_live_site, $jomresConfig_absolute_path, $mosConfig_absolute_path, $mosConfig_lang;
 $plugin = "migs";
 
+require('VPCPaymentConnection.php');
+
 class j00610migs
 {
 
@@ -56,25 +58,25 @@ class j00610migs
 		}
 // start reciving payment
 // stop reciving payment
-		$hash = $_REQUEST['vpc_SecureHash'];
-		unset($_REQUEST['vpc_SecureHash']);
 //echo $settingArray['secure'];
-		$hashSecret = $settingArray['secure'];
-		foreach ($_POST as $key => $value) {
-			if (($key != "vpc_SecureHash" || strlen($value) > 0) && (strpos($key, 'vpc_') !== false || $key == 'Title')) {
-				if (in_array($key, array("vpc_SecureHash", "vpc_SecureHashType")) == 0) {
-					// echo $key."=".$value."<br />";
-					$hashData .= $key . "=" . $value . "&";
-				}
-			}
-		}
-        $hashData = rtrim($hashData, "&");
 
-		  echo "hash=".$hash;echo "<br />";
+        $conn = new VPCPaymentConnection();
+		$conn->setSecuresecret($settingArray['secure']);
+
+		foreach ($_POST as $key => $value) {
+			if (($key != "vpc_SecureHash") && ($key != "vpc_SecureHashType") && (substr($key, 0, 4) == 'vpc_')) {
+                $conn->addDigitalOrderField($key, $value);
+            }
+        }
+
+        $serverSecureHash = array_key_exists("vpc_SecureHash", $_POST) ? $_POST["vpc_SecureHash"] : "";
+        $secureHash = $conn->hashAllFields();
+
+		/*echo "hash=".$hash;echo "<br />";
 		  echo "StrHash=".strtoupper(hash_hmac('SHA256', $hashData, pack('H*', $hashSecret)));echo "<br />";
 		  echo $hashData;
-		  die();
-		if ($_REQUEST['vpc_AcqResponseCode'] == "00" && $hash == strtoupper(hash_hmac('SHA256', $hashData, pack('H*', $hashSecret)))) {
+		  die();*/
+		if ($_REQUEST['vpc_AcqResponseCode'] == "00" && $serverSecureHash == $secureHash) {
 			gateway_log("Payment passed for " . $jomressession);
 			echo "<h3>" . jr_gettext('_JOMRES_COM_A_MIGS_SUCCESSFUL' . $plugin, 'Booking successful') . ".</h3>";
 			$beforebook = date("Y-m-d H:i");

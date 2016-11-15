@@ -19,6 +19,8 @@ else
 // ################################################################
 //
 
+require('VPCPaymentConnection.php');
+
 class j00605migs
 {
 
@@ -73,33 +75,31 @@ class j00605migs
 //	$returl=JURI::base()."index.php?option=com_jomres&page=completebk&jsid=$jomressession&plugin=$plugin";
 		$returl = JURI::base() . "jomres/remote_plugins/jomres_gateway_migs/notify.php";
 		$params = array("Title" => "PHP VPC 3-Party", "vpc_Version" => "1", "vpc_Command" => "pay", "vpc_AccessCode" => $settingArray['accesscode'], "vpc_MerchTxnRef" => $fax, "vpc_Merchant" => $settingArray['merchantid'], "vpc_OrderInfo" => $oid, "vpc_Amount" => $total, "vpc_Locale" => $settingArray['locale'], "vpc_ReturnURL" => $returl, "vpc_TicketNo" => $oid);
-        $hashSecret = $settingArray['secure'];
 		ksort($params);
 
-		$appendAmp = 0;
-		$vpcURL = $settingArray['returl'] . "?";
-        $hashString = "";
-		foreach ($params as $key => $value) {
+        $title = $params["Title"];
+        unset($params["Title"]);
+        
+        $conn = new VPCPaymentConnection();
+        $conn->setSecureSecret($settingArray['secure']);
 
-			if (strlen($value) > 0) {
+		$vpcURL = $settingArray['returl'];
+        
+        foreach($params as $key => $value) {
+            if (strlen($value) > 0) {
+                $conn->addDigitalOrderField($key, $value);
+            }
+        }
 
-				if ($appendAmp == 0) {
-					$vpcURL .= urlencode($key) . '=' . urlencode($value);
-                    $hashString .= $key . '=' . $value;
-					$appendAmp = 1;
-				} else {
-					$vpcURL .= '&' . urlencode($key) . "=" . urlencode($value);
-                    $hashString .= '&' . $key . '=' . $value;
-				}
-			}
-		}
-        $hashString = ltrim($hashString, '&');
-		if (strlen(SECURE) > 0) {
-			$vpcURL .= "&vpc_SecureHash=" . strtoupper(hash_hmac('SHA256', $hashString, pack('H*', $hashSecret)));
-            $vpcURL .= "&vpc_SecureHashType=" . "SHA256";
-		}
+        $secureHash = $conn->hashAllFields();
+        $conn->addDigitalOrderField("Title", $title);
+        $conn->addDigitalOrderField("vpc_SecureHash", $secureHash);
+        $conn->addDigitalOrderField("vpc_SecureHashType", "SHA256");
+
+        $vpcURL = $conn->getDigitalOrder($vpcURL);
+
 		//$vpcURL.="&SessionVariable1=1234";
-		echo "ab" . $vpcURL;echo "<br \><br \>";echo '"' . $hashString . '"';die();
+		//echo $vpcURL;die();
 		header("Location: " . $vpcURL);
 // stop sending	payment
 	}
